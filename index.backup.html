@@ -1,0 +1,2724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lightning Rod Hydration — Cyberpunk Brand &amp; Packaging Concept</title>
+
+  <!-- Cyberpunk Display, Geometric UI, and HUD Monospace Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,400;0,600;0,700;1,700&family=Orbitron:wght@700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. BRAND COLOR TOKENS & GLOBAL RESET
+       ========================================================================== */
+    :root {
+      --void-black: #000000;
+      --cyber-crimson: #c5003c;
+      --deep-crimson: #880425;
+      --volt-yellow: #f3e600;
+      --synapse-cyan: #55ead4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--void-black);
+      color: #ffffff;
+      font-family: 'Chakra Petch', sans-serif;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(circle at 14% 18%, rgba(136, 4, 37, 0.32) 0%, transparent 45%),
+        radial-gradient(circle at 86% 78%, rgba(85, 234, 212, 0.14) 0%, transparent 45%),
+        linear-gradient(rgba(85, 234, 212, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(85, 234, 212, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    /* Subtle CRT Scanline Overlay */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0, 0, 0, 0.22) 3px,
+        rgba(0, 0, 0, 0.22) 4px
+      );
+    }
+
+    /* GPU-Composited Surge Flash Overlay (Replaces heavy body repaints on mobile) */
+    .surge-flash-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 998;
+      opacity: 0;
+      will-change: opacity;
+      background: radial-gradient(
+        circle at 50% 45%,
+        rgba(85, 234, 212, 0.42),
+        rgba(243, 230, 0, 0.24) 45%,
+        rgba(197, 0, 60, 0.36) 80%,
+        transparent 100%
+      );
+    }
+
+    .surge-flash-overlay.flash-run {
+      animation: flashSurge 0.42s ease-out forwards;
+    }
+
+    .stage-shake {
+      animation: stageShake 0.32s cubic-bezier(.36, .07, .19, .97) both;
+    }
+
+    @keyframes stageShake {
+      15%, 85% { transform: translate3d(-2px, 1px, 0); }
+      30%, 70% { transform: translate3d(3px, -1px, 0); }
+      50% { transform: translate3d(-3px, 1px, 0); }
+    }
+
+    @keyframes flashSurge {
+      0% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* ==========================================================================
+       2. CYBERPUNK HUD CONTAINERS & GLITCH TYPOGRAPHY
+       ========================================================================== */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 20px 64px;
+    }
+
+    .cyber-panel {
+      background: rgba(8, 8, 10, 0.9);
+      border: 1px solid var(--deep-crimson);
+      position: relative;
+      clip-path: polygon(
+        0 14px,
+        14px 0,
+        calc(100% - 22px) 0,
+        100% 22px,
+        100% calc(100% - 14px),
+        calc(100% - 14px) 100%,
+        22px 100%,
+        0 calc(100% - 22px)
+      );
+      box-shadow: inset 0 0 28px rgba(136, 4, 37, 0.32);
+    }
+
+    .cyber-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 68px;
+      height: 3px;
+      background: var(--volt-yellow);
+      z-index: 3;
+    }
+
+    .cyber-panel::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 68px;
+      height: 3px;
+      background: var(--synapse-cyan);
+      z-index: 3;
+    }
+
+    /* Chromatic Aberration Glitch Header */
+    .glitch-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      position: relative;
+      color: var(--volt-yellow);
+      letter-spacing: 0.06em;
+      text-shadow: 2px 0 var(--cyber-crimson), -2px 0 var(--synapse-cyan);
+      display: inline-block;
+      line-height: 1.1;
+    }
+
+    .glitch-title::before,
+    .glitch-title::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .glitch-title::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--cyber-crimson);
+      clip-path: inset(20% 0 55% 0);
+      animation: glitch-anim-1 2.6s infinite linear alternate-reverse;
+    }
+
+    .glitch-title::after {
+      left: -2px;
+      text-shadow: 2px 0 var(--synapse-cyan);
+      clip-path: inset(60% 0 15% 0);
+      animation: glitch-anim-2 2.1s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim-1 {
+      0% { clip-path: inset(12% 0 70% 0); transform: translate(-2px, 1px); }
+      20% { clip-path: inset(65% 0 10% 0); transform: translate(2px, -1px); }
+      40% { clip-path: inset(30% 0 45% 0); transform: translate(-1px, 0); }
+      60% { clip-path: inset(80% 0 5% 0); transform: translate(3px, 1px); }
+      80% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, -1px); }
+      100% { clip-path: inset(45% 0 30% 0); transform: translate(1px, 0); }
+    }
+
+    @keyframes glitch-anim-2 {
+      0% { clip-path: inset(75% 0 8% 0); transform: translate(2px, -1px); }
+      25% { clip-path: inset(15% 0 62% 0); transform: translate(-3px, 1px); }
+      50% { clip-path: inset(50% 0 25% 0); transform: translate(2px, 0); }
+      75% { clip-path: inset(8% 0 78% 0); transform: translate(-1px, -1px); }
+      100% { clip-path: inset(35% 0 40% 0); transform: translate(2px, 1px); }
+    }
+
+    /* ==========================================================================
+       3. TOP HUD HEADER BAR
+       ========================================================================== */
+    .hud-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--deep-crimson);
+      padding-bottom: 18px;
+      margin-bottom: 28px;
+      gap: 14px;
+    }
+
+    .hud-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--synapse-cyan);
+      letter-spacing: 0.14em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--cyber-crimson);
+      box-shadow: 0 0 10px var(--cyber-crimson);
+      animation: pulse 1.2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.8); }
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Shop Page Hyperlink Button */
+    .cyber-shop-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      background: var(--cyber-crimson);
+      color: #ffffff;
+      border: 1px solid var(--volt-yellow);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+      box-shadow: 0 0 14px rgba(197, 0, 60, 0.5);
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.1s ease, background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .cyber-shop-link:hover {
+      background: var(--volt-yellow);
+      color: var(--void-black);
+      border-color: var(--synapse-cyan);
+      box-shadow: 0 0 20px rgba(243, 230, 0, 0.75);
+    }
+
+    .cyber-shop-link:active {
+      transform: scale(0.97);
+    }
+
+    .tagline-banner {
+      background: var(--volt-yellow);
+      color: var(--void-black);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 0.82rem;
+      padding: 8px 16px;
+      letter-spacing: 0.1em;
+      clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+      box-shadow: 3px 3px 0 var(--cyber-crimson);
+    }
+
+    /* ==========================================================================
+       4. MAIN 2-COLUMN SHOWCASE GRID & 360° CAN MOCKUP
+       ========================================================================== */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .product-stage {
+      padding: 26px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: radial-gradient(circle at 50% 46%, rgba(197, 0, 60, 0.24) 0%, rgba(0, 0, 0, 0.96) 68%);
+    }
+
+    .stage-label {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--synapse-cyan);
+      margin-bottom: 14px;
+    }
+
+    .can-wrapper {
+      position: relative;
+      width: 290px;
+      height: 455px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4px 0 20px;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
+    }
+
+    .can-wrapper:active {
+      cursor: grabbing;
+    }
+
+    .can-aura {
+      position: absolute;
+      width: 360px;
+      height: 500px;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse closest-side at center,
+        rgba(197, 0, 60, 0.58) 0%,
+        rgba(243, 230, 0, 0.24) 38%,
+        rgba(85, 234, 212, 0.12) 64%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      opacity: 0.78;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      will-change: transform, opacity;
+      z-index: 0;
+    }
+
+    .can-wrapper:hover .can-aura,
+    .can-aura.boosted {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+
+    .lightning-arcs {
+      position: absolute;
+      inset: -14px;
+      width: calc(100% + 28px);
+      height: calc(100% + 28px);
+      pointer-events: none;
+      z-index: 5;
+      opacity: 0.65;
+      transition: opacity 0.2s;
+    }
+
+    .can-wrapper:hover .lightning-arcs,
+    body.zap-active .lightning-arcs {
+      opacity: 1;
+    }
+
+    .arc-path {
+      stroke-dasharray: 120;
+      stroke-dashoffset: 120;
+      animation: arcFlash 2.4s infinite;
+    }
+    .arc-path:nth-child(2) { animation-delay: 0.8s; }
+    .arc-path:nth-child(3) { animation-delay: 1.5s; }
+
+    @keyframes arcFlash {
+      0%, 70%, 100% { stroke-dashoffset: 120; opacity: 0; }
+      74% { stroke-dashoffset: 0; opacity: 1; }
+      82% { stroke-dashoffset: -60; opacity: 0.85; }
+      88% { stroke-dashoffset: -120; opacity: 0; }
+    }
+
+    /* Physical Aluminum Can Geometry */
+    .energy-can {
+      position: relative;
+      width: 216px;
+      height: 416px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .energy-can::after {
+      content: "";
+      position: absolute;
+      bottom: -14px;
+      width: 196px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.92) 0%, transparent 72%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .can-lid {
+      width: 186px;
+      height: 14px;
+      background: linear-gradient(90deg, #3a3d42 0%, #d4d8df 28%, #777c85 55%, #b8bec7 82%, #2c2e33 100%);
+      border-radius: 50% / 100% 100% 0 0;
+      border-bottom: 2px solid #18191c;
+    }
+
+    .can-neck {
+      width: 216px;
+      height: 18px;
+      background: linear-gradient(90deg, #1b1d20 0%, #8f959e 26%, #3f434a 52%, #6d737d 80%, #141517 100%);
+      clip-path: polygon(7% 0%, 93% 0%, 100% 100%, 0% 100%);
+    }
+
+    .can-body {
+      position: relative;
+      width: 216px;
+      height: 366px;
+      background: var(--void-black);
+      overflow: hidden;
+      border-left: 1px solid rgba(85, 234, 212, 0.28);
+      border-right: 1px solid rgba(85, 234, 212, 0.28);
+    }
+
+    /* 3-Panel 360° Cylindrical Wrap (3 x 216px = 648px) */
+    .can-label-wrap {
+      display: flex;
+      width: 648px;
+      height: 100%;
+      transform: translateX(0px);
+      transition: transform 0.08s ease-out;
+      will-change: transform;
+    }
+
+    .label-panel {
+      width: 216px;
+      height: 100%;
+      flex-shrink: 0;
+      position: relative;
+      padding: 13px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px dashed rgba(243, 230, 0, 0.25);
+    }
+
+    /* Front Label Panel — Matched to Studio Can Render */
+    .panel-front {
+      background:
+        radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.34) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 74% 32%, rgba(255, 255, 255, 0.28) 0 1.2px, transparent 1.9px),
+        radial-gradient(circle at 38% 64%, rgba(255, 255, 255, 0.25) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 82% 78%, rgba(255, 255, 255, 0.3) 0 1.3px, transparent 2px),
+        radial-gradient(circle at 16% 84%, rgba(85, 234, 212, 0.35) 0 1px, transparent 1.7px),
+        linear-gradient(165deg, #09090b 0%, #180209 45%, #050507 100%);
+      overflow: hidden;
+    }
+
+    .can-armor-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .panel-front > div {
+      position: relative;
+      z-index: 2;
+    }
+
+    .can-top-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      color: var(--synapse-cyan);
+      border-bottom: 1px solid var(--cyber-crimson);
+      padding-bottom: 4px;
+    }
+
+    .can-emblem-box {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 26px;
+      transform: skewY(-5deg);
+    }
+
+    .can-brand-main {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 1.54rem;
+      line-height: 0.92;
+      text-align: center;
+      color: var(--volt-yellow);
+      text-shadow:
+        2px 2px 0 #000000,
+        -2px 1px 0 var(--synapse-cyan),
+        3px -1px 0 var(--cyber-crimson);
+      letter-spacing: 0.02em;
+    }
+
+    .can-brand-sub {
+      color: var(--synapse-cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 0.96rem;
+      letter-spacing: 0.12em;
+      padding: 2px 6px;
+      margin-top: 22px;
+      text-shadow:
+        2px 2px 0 #000000,
+        -1px 0 10px rgba(85, 234, 212, 0.8);
+    }
+
+    .can-tagline-box {
+      color: var(--volt-yellow);
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.66rem;
+      text-align: center;
+      padding: 3px 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 4px #000000, 1px 0 var(--cyber-crimson);
+    }
+
+    .hazard-bars {
+      height: 7px;
+      width: 100%;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--volt-yellow),
+        var(--volt-yellow) 6px,
+        var(--void-black) 6px,
+        var(--void-black) 12px
+      );
+      margin-top: 5px;
+    }
+
+    .can-bottom-specs {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      color: #e2e8f0;
+      margin-top: 5px;
+    }
+
+    /* Side Panel: Neural Overdrive Formula */
+    .panel-side {
+      background: linear-gradient(180deg, #090204 0%, #160208 50%, #000000 100%);
+    }
+
+    .side-header {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.84rem;
+      color: var(--synapse-cyan);
+      border-left: 3px solid var(--volt-yellow);
+      padding-left: 8px;
+      line-height: 1.18;
+    }
+
+    .lore-copy {
+      font-size: 0.68rem;
+      line-height: 1.38;
+      color: #e2e8f0;
+      background: rgba(136, 4, 37, 0.28);
+      border: 1px solid var(--deep-crimson);
+      padding: 8px;
+    }
+
+    .stat-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.63rem;
+    }
+
+    .stat-row span {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2px;
+      color: var(--volt-yellow);
+    }
+
+    .stat-track {
+      height: 6px;
+      background: #1a1a1a;
+      border: 1px solid var(--deep-crimson);
+    }
+
+    .stat-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyber-crimson), var(--volt-yellow), var(--synapse-cyan));
+    }
+
+    /* Back Panel: System Telemetry & Nutrition */
+    .panel-back {
+      background: #050506;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .telemetry-box {
+      border: 1.5px solid var(--volt-yellow);
+      padding: 7px;
+      font-size: 0.6rem;
+      color: #f1f5f9;
+    }
+
+    .telemetry-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      color: var(--volt-yellow);
+      border-bottom: 2px solid var(--cyber-crimson);
+      padding-bottom: 3px;
+      margin-bottom: 5px;
+    }
+
+    .telemetry-line {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 2px 0;
+    }
+
+    .barcode {
+      height: 34px;
+      background: repeating-linear-gradient(
+        90deg,
+        #fff 0px, #fff 2px,
+        #000 2px, #000 4px,
+        #fff 4px, #fff 5px,
+        #000 5px, #000 8px,
+        #fff 8px, #fff 11px,
+        #000 11px, #000 12px
+      );
+      margin-top: 6px;
+      border: 2px solid #fff;
+    }
+
+    /* Specular Cylindrical Lighting Overlay */
+    .can-cylinder-shader {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.76) 0%,
+        rgba(0, 0, 0, 0.2) 14%,
+        rgba(255, 255, 255, 0.22) 27%,
+        rgba(255, 255, 255, 0.03) 38%,
+        rgba(0, 0, 0, 0.14) 62%,
+        rgba(85, 234, 212, 0.16) 84%,
+        rgba(0, 0, 0, 0.8) 100%
+      );
+      box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.72), inset 0 -6px 12px rgba(0, 0, 0, 0.82);
+    }
+
+    .can-base {
+      width: 216px;
+      height: 16px;
+      background: linear-gradient(90deg, #181a1c 0%, #8a9099 28%, #3c4047 55%, #676d75 82%, #111214 100%);
+      clip-path: polygon(0% 0%, 100% 0%, 91% 100%, 9% 100%);
+    }
+
+    /* Interactive Controls */
+    .can-controls {
+      width: 100%;
+      max-width: 390px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 4;
+    }
+
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--synapse-cyan);
+    }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      background: var(--deep-crimson);
+      outline: none;
+      border: 1px solid var(--cyber-crimson);
+      cursor: pointer;
+      touch-action: pan-x;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      background: var(--volt-yellow);
+      border: 2px solid var(--void-black);
+      cursor: pointer;
+      clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    @media (max-width: 440px) {
+      .btn-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cyber-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      padding: 12px 12px;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: transform 0.1s ease, background-color 0.15s ease;
+      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    }
+
+    .cyber-btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-zap {
+      background: var(--volt-yellow);
+      color: var(--void-black);
+      box-shadow: 0 0 18px rgba(243, 230, 0, 0.4);
+    }
+
+    .btn-zap:hover {
+      background: #fff41a;
+      box-shadow: 0 0 26px rgba(243, 230, 0, 0.85);
+    }
+
+    .btn-variant {
+      background: var(--cyber-crimson);
+      color: #ffffff;
+      border-left: 3px solid var(--synapse-cyan);
+    }
+
+    .btn-variant:hover {
+      background: #e00045;
+      box-shadow: 0 0 20px rgba(197, 0, 60, 0.7);
+    }
+
+    /* ==========================================================================
+       5. RIGHT COLUMN: BRAND STRATEGY, PALETTE & FLAVOR ARCHITECTURE
+       ========================================================================== */
+    .details-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .section-card {
+      padding: 22px 24px;
+    }
+
+    .card-kicker {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--cyber-crimson);
+      letter-spacing: 0.16em;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .card-heading {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      color: var(--volt-yellow);
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .body-text {
+      font-size: 0.94rem;
+      line-height: 1.6;
+      color: #d8dee9;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 580px) {
+      .palette-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .swatch-card {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: #070709;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease;
+      overflow: hidden;
+    }
+
+    .swatch-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--volt-yellow);
+    }
+
+    .swatch-color {
+      height: 52px;
+      width: 100%;
+    }
+
+    .swatch-info {
+      padding: 8px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .swatch-hex {
+      font-size: 0.78rem;
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    .swatch-role {
+      font-size: 0.65rem;
+      color: var(--synapse-cyan);
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 540px) {
+      .pillars-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pillar-box {
+      background: rgba(136, 4, 37, 0.2);
+      border-left: 3px solid var(--synapse-cyan);
+      padding: 12px;
+    }
+
+    .pillar-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.82rem;
+      color: var(--volt-yellow);
+      margin-bottom: 4px;
+    }
+
+    .pillar-desc {
+      font-size: 0.84rem;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       6. BRAND IDENTITY LOGO SUITE (01 - 06)
+       ========================================================================== */
+    .logo-suite-section {
+      margin-top: 32px;
+      padding: 26px 24px 30px;
+    }
+
+    .suite-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--deep-crimson);
+      padding-bottom: 14px;
+    }
+
+    .logo-suite-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 960px) {
+      .logo-suite-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .logo-suite-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .logo-card {
+      background: radial-gradient(circle at 50% 45%, rgba(136, 4, 37, 0.2) 0%, rgba(5, 5, 7, 0.96) 72%);
+      border: 1px solid rgba(197, 0, 60, 0.45);
+      padding: 18px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 225px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .logo-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--volt-yellow);
+      box-shadow: 0 10px 26px rgba(197, 0, 60, 0.32);
+    }
+
+    .logo-card.selected-lockup {
+      border-color: var(--synapse-cyan);
+      box-shadow: 0 0 22px rgba(85, 234, 212, 0.35);
+    }
+
+    .logo-stage {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+    }
+
+    .logo-stage svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .logo-caption {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      color: var(--volt-yellow);
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Toast Feedback Banner */
+    .copy-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--void-black);
+      border: 1px solid var(--synapse-cyan);
+      box-shadow: 4px 4px 0 var(--cyber-crimson);
+      color: var(--volt-yellow);
+      font-family: 'Share Tech Mono', monospace;
+      padding: 10px 18px;
+      font-size: 0.84rem;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.25s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .copy-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       7. JS-DRIVEN CANVAS FX, QUICK-VIEW PILLS & TELEMETRY SIMULATOR
+       ========================================================================== */
+    #lightningCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .product-stage > *:not(#lightningCanvas) {
+      position: relative;
+      z-index: 2;
+    }
+
+    .energy-can {
+      transition: transform 0.14s ease-out;
+      transform-style: preserve-3d;
+    }
+
+    .hud-icon-btn {
+      background: rgba(136, 4, 37, 0.32);
+      border: 1px solid var(--synapse-cyan);
+      color: var(--synapse-cyan);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.76rem;
+      padding: 8px 12px;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .hud-icon-btn:hover {
+      background: var(--synapse-cyan);
+      color: var(--void-black);
+    }
+
+    .hud-icon-btn.muted {
+      border-color: var(--cyber-crimson);
+      color: var(--cyber-crimson);
+    }
+
+    .view-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    @media (max-width: 440px) {
+      .view-pills {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .pill-btn {
+      background: rgba(12, 12, 16, 0.9);
+      border: 1px solid var(--deep-crimson);
+      color: #cbd5e1;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      padding: 8px 6px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .hud-icon-btn:hover {
+      background: var(--synapse-cyan);
+      color: var(--void-black);
+    }
+
+    .hud-icon-btn.muted {
+      border-color: var(--cyber-crimson);
+      color: var(--cyber-crimson);
+    }
+
+    .view-pills {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    @media (max-width: 440px) {
+      .view-pills {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .pill-btn {
+      background: rgba(12, 12, 16, 0.9);
+      border: 1px solid var(--deep-crimson);
+      color: #cbd5e1;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      padding: 7px 6px;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      transition: all 0.15s ease;
+    }
+
+    .pill-btn:hover,
+    .pill-btn.active {
+      border-color: var(--volt-yellow);
+      color: var(--volt-yellow);
+      background: rgba(243, 230, 0, 0.12);
+    }
+
+    /* Bio-Stream Telemetry Simulator */
+    .telemetry-sim-wrap {
+      margin-top: 12px;
+      background: #040406;
+      border: 1px solid var(--deep-crimson);
+      padding: 12px;
+    }
+
+    .wave-canvas-box {
+      position: relative;
+      width: 100%;
+      height: 92px;
+      background:
+        linear-gradient(rgba(85, 234, 212, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(85, 234, 212, 0.06) 1px, transparent 1px),
+        #020203;
+      background-size: 18px 18px;
+      border: 1px solid rgba(85, 234, 212, 0.25);
+      overflow: hidden;
+    }
+
+    #telemetryWaveCanvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .sim-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .sim-metric-card {
+      background: rgba(136, 4, 37, 0.18);
+      border-left: 2px solid var(--volt-yellow);
+      padding: 6px 8px;
+    }
+
+    .sim-metric-label {
+      font-size: 0.62rem;
+      color: #94a3b8;
+    }
+
+    .sim-metric-val {
+      font-size: 0.92rem;
+      color: var(--synapse-cyan);
+      font-weight: bold;
+      margin-top: 2px;
+    }
+
+    .sim-action-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .sim-status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+    }
+
+    .sim-status-text {
+      color: var(--volt-yellow);
+    }
+
+    .sim-tier-badge {
+      color: var(--synapse-cyan);
+      letter-spacing: 0.08em;
+    }
+
+    /* Interactive Hold-to-Charge Button */
+    .hold-zap-btn {
+      position: relative;
+      width: 100%;
+      padding: 14px 16px;
+      background: #121217;
+      border: 1.5px solid var(--volt-yellow);
+      color: #ffffff;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-tap-highlight-color: transparent;
+      clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+      transition: transform 0.08s ease, border-color 0.15s ease;
+    }
+
+    .hold-zap-btn.charging {
+      transform: scale(0.985);
+    }
+
+    .hold-fill-bar {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      background: linear-gradient(90deg, #880425 0%, #c5003c 45%, #f3e600 82%, #55ead4 100%);
+      transform: scaleX(0);
+      transform-origin: left center;
+      will-change: transform;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hold-btn-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+    }
+
+    .hold-pct-readout {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.86rem;
+      color: var(--volt-yellow);
+      background: rgba(0, 0, 0, 0.72);
+      padding: 2px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+    }
+  </style>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="surge-flash-overlay" id="surgeFlashOverlay"></div>
+
+  <div class="container">
+    <!-- Top HUD Header -->
+    <header class="hud-header">
+      <div>
+        <div class="hud-tag">
+          <span class="pulse-dot"></span>
+          <span>CONCEPT_BLUEPRINT // V2.077 // STUDIO CAN &amp; LOGO SUITE</span>
+        </div>
+        <h1 class="glitch-title" data-text="LIGHTNING ROD HYDRATION" style="font-size: clamp(1.4rem, 3vw, 2.2rem); margin-top: 6px;">
+          LIGHTNING ROD HYDRATION
+        </h1>
+      </div>
+
+      <div class="header-actions">
+        <button type="button" class="hud-icon-btn" id="audioToggleBtn">[AUDIO: ON]</button>
+        <!-- PLACEHOLDER LINK: Replace "shop-placeholder.html" with your actual shop page filename -->
+        <a href="shop.html" class="cyber-shop-link" id="shopPageLink">&#9889; ENTER SHOP &rarr;</a>
+        <div class="tagline-banner" id="headerTagline">"ZAP IT INTO THY BLOODSTREAM"</div>
+      </div>
+    </header>
+
+    <!-- Main 2-Column Showcase -->
+    <main class="showcase-grid">
+      <!-- Left Column: Interactive 360° Can Mockup -->
+      <section class="cyber-panel product-stage" id="productStage">
+        <canvas id="lightningCanvas"></canvas>
+
+        <div class="stage-label">
+          <span>[3D_CAN_WRAP_PREVIEW // INTERACTIVE_ARC_FIELD]</span>
+          <span id="angleReadout">VIEW: FRONT LABEL (0°)</span>
+        </div>
+
+        <div class="can-wrapper" id="canWrapper" title="Flick or drag horizontally to spin; hover to attract lightning arcs">
+          <div class="can-aura" id="canAura"></div>
+          <svg class="lightning-arcs" viewBox="0 0 300 460" fill="none">
+            <path class="arc-path" d="M45 90 L22 145 L52 165 L18 240" stroke="#55ead4" stroke-width="2.5" stroke-linecap="round" />
+            <path class="arc-path" d="M258 110 L282 175 L248 195 L278 275" stroke="#f3e600" stroke-width="2.5" stroke-linecap="round" />
+            <path class="arc-path" d="M35 310 L14 355 L46 375 L25 420" stroke="#c5003c" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+
+          <div class="energy-can">
+            <div class="can-lid"></div>
+            <div class="can-neck"></div>
+
+            <div class="can-body">
+              <div class="can-label-wrap" id="labelWrap">
+                <!-- PANEL 1: FRONT LABEL (Cyber-Crimson Armor & Yellow Lightning) -->
+                <div class="label-panel panel-front" id="frontPanel">
+                  <svg class="can-armor-svg" viewBox="0 0 216 366" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Top Armor Plates -->
+                    <polygon class="armor-primary" points="0,12 68,12 92,48 45,98 0,98" fill="#c5003c" opacity="0.88" />
+                    <polygon class="armor-secondary" points="145,10 216,10 216,125 168,110 132,52" fill="#880425" opacity="0.92" />
+                    <polygon class="armor-primary" points="168,24 216,24 216,95 178,84" fill="#c5003c" opacity="0.85" />
+                    <!-- Center Tech Grill & Conduit Lines -->
+                    <polygon class="armor-bolt-stroke" points="56,56 160,56 146,96 70,96" fill="#121215" stroke="#f3e600" stroke-width="1" />
+                    <line class="armor-bolt-stroke" x1="66" y1="64" x2="150" y2="64" stroke="#f3e600" stroke-width="1" opacity="0.65" />
+                    <line class="armor-bolt-stroke" x1="68" y1="71" x2="148" y2="71" stroke="#f3e600" stroke-width="1" opacity="0.65" />
+                    <line class="armor-bolt-stroke" x1="70" y1="78" x2="146" y2="78" stroke="#f3e600" stroke-width="1" opacity="0.65" />
+                    <line class="armor-bolt-stroke" x1="72" y1="85" x2="144" y2="85" stroke="#f3e600" stroke-width="1" opacity="0.65" />
+                    <!-- Lower Mechanical Panels -->
+                    <polygon class="armor-primary" points="0,195 58,215 84,278 0,295" fill="#c5003c" opacity="0.85" />
+                    <polygon class="armor-secondary" points="148,188 216,172 216,336 135,336 124,254" fill="#880425" opacity="0.9" />
+                    <polygon class="armor-primary" points="165,205 216,195 216,315 155,315" fill="#c5003c" opacity="0.78" />
+                    <polygon class="armor-primary" points="48,315 142,315 162,356 32,356" fill="#c5003c" opacity="0.82" />
+                    <!-- Tech Circuit Accents -->
+                    <polyline class="armor-rim-stroke" points="82,210 128,210 140,235 140,285" stroke="#55ead4" stroke-width="1.2" opacity="0.7" />
+                    <rect class="armor-bolt-stroke" x="92" y="222" width="18" height="28" stroke="#f3e600" stroke-width="1" fill="rgba(0,0,0,0.6)" />
+                    <!-- Jagged Electric Lightning Bolts -->
+                    <polyline class="armor-bolt-stroke" points="196,6 184,48 198,64 168,112 182,126 144,175" stroke="#f3e600" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+                    <polyline class="armor-bolt-stroke" points="14,42 42,74 30,86 64,122" stroke="#f3e600" stroke-width="2.4" stroke-linecap="round" />
+                    <polyline class="armor-bolt-stroke" points="68,186 44,218 58,228 24,268" stroke="#f3e600" stroke-width="2.6" stroke-linecap="round" />
+                    <polyline class="armor-bolt-stroke" points="142,196 174,216 164,230 198,258" stroke="#f3e600" stroke-width="2.2" stroke-linecap="round" />
+                    <polyline class="armor-bolt-stroke" points="194,312 176,340 186,348 168,365" stroke="#f3e600" stroke-width="2.5" stroke-linecap="round" />
+                    <!-- Rim Specular Edge Highlights -->
+                    <line class="armor-rim-stroke" x1="2" y1="0" x2="2" y2="366" stroke="#55ead4" stroke-width="2.5" opacity="0.75" />
+                    <line class="armor-rim-stroke" x1="214" y1="0" x2="214" y2="366" stroke="#55ead4" stroke-width="2" opacity="0.55" />
+                  </svg>
+
+                  <div>
+                    <div class="can-top-strip">
+                      <span>500ML // 16.9 FL OZ</span>
+                      <span>VOLT-SERIES 01</span>
+                    </div>
+
+                    <div class="can-emblem-box">
+                      <div class="can-brand-main">LIGHTNING<br />ROD</div>
+                      <div class="can-brand-sub">HYDRATION</div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="can-tagline-box" id="canTagline">ZAP IT INTO THY BLOODSTREAM</div>
+                    <div class="hazard-bars"></div>
+                    <div class="can-bottom-specs">
+                      <span>200MG CAFFEINE<br />1000MG ELECTROLYTES</span>
+                      <span style="color: var(--volt-yellow); font-weight: bold;">ZERO<br />SUGAR</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- PANEL 2: SIDE LORE & FORMULA -->
+                <div class="label-panel panel-side">
+                  <div class="side-header">
+                    NEURAL &amp; CELLULAR<br />OVERDRIVE MATRIX
+                  </div>
+
+                  <div class="lore-copy">
+                    <strong style="color: var(--volt-yellow);">// PROTOCOL:</strong> Engineered for netrunners, midnight grinders, and high-output bodies. Lightning Rod channels bio-electric electrolytes directly into depleted synapses.
+                  </div>
+
+                  <div class="stat-bars">
+                    <div class="stat-row">
+                      <span><span>HYDRATION CONDUCTIVITY</span><span>99%</span></span>
+                      <div class="stat-track"><div class="stat-fill" style="width: 99%;"></div></div>
+                    </div>
+                    <div class="stat-row">
+                      <span><span>SYNAPTIC FOCUS</span><span>94%</span></span>
+                      <div class="stat-track"><div class="stat-fill" style="width: 94%;"></div></div>
+                    </div>
+                    <div class="stat-row">
+                      <span><span>CRASH / SUGAR LOAD</span><span>00%</span></span>
+                      <div class="stat-track"><div class="stat-fill" style="width: 4%; background: var(--cyber-crimson);"></div></div>
+                    </div>
+                  </div>
+
+                  <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--synapse-cyan); border-top: 1px solid var(--deep-crimson); padding-top: 6px;">
+                    FLAVOR PROFILE: <strong>PLASMA YUZU &times; CRIMSON BERRY</strong>
+                  </div>
+                </div>
+
+                <!-- PANEL 3: BACK TELEMETRY / NUTRITION -->
+                <div class="label-panel panel-back">
+                  <div class="telemetry-box">
+                    <div class="telemetry-title">SYSTEM TELEMETRY</div>
+                    <div class="telemetry-line"><span>SERVING SIZE</span><span>1 CAN (500ML)</span></div>
+                    <div class="telemetry-line"><span>CALORIES</span><span>10</span></div>
+                    <div class="telemetry-line"><span>SODIUM (IONIC)</span><span>320MG</span></div>
+                    <div class="telemetry-line"><span>POTASSIUM</span><span>450MG</span></div>
+                    <div class="telemetry-line"><span>MAGNESIUM</span><span>120MG</span></div>
+                    <div class="telemetry-line"><span>L-THEANINE</span><span>150MG</span></div>
+                    <div class="telemetry-line" style="color: var(--volt-yellow);"><span>CAFFEINE ANHYDROUS</span><span>200MG</span></div>
+                  </div>
+
+                  <div style="font-size: 0.56rem; color: #94a3b8; line-height: 1.3;">
+                    <strong style="color: var(--cyber-crimson);">WARNING:</strong> High voltage formula. Not recommended for non-augmented humans under 18 or those sensitive to caffeine.
+                  </div>
+
+                  <div>
+                    <div class="barcode"></div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.58rem; color: var(--volt-yellow); margin-top: 3px;">
+                      <span>LRH-2077-ZAP</span>
+                      <span>RECYCLE ALUMINUM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cylindrical Metallic Shading -->
+              <div class="can-cylinder-shader"></div>
+            </div>
+
+            <div class="can-base"></div>
+          </div>
+        </div>
+
+        <!-- Interactive Can Controls -->
+        <div class="can-controls">
+          <div class="slider-group">
+            <div class="slider-header">
+              <span>ROTATE CAN CYLINDER (FLICK OR SLIDE)</span>
+              <span id="spinStateLabel">MANUAL</span>
+            </div>
+            <input type="range" id="rotateSlider" min="0" max="432" value="0" />
+          </div>
+
+          <div class="view-pills">
+            <button type="button" class="pill-btn active" data-target="0">FRONT 0°</button>
+            <button type="button" class="pill-btn" data-target="216">FORMULA 120°</button>
+            <button type="button" class="pill-btn" data-target="432">SPECS 240°</button>
+            <button type="button" class="pill-btn" id="autoSpinBtn">&#8635; AUTO-SPIN</button>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="cyber-btn btn-zap" id="zapBtn">&#9889; TRIGGER ZAP SURGE</button>
+            <button type="button" class="cyber-btn btn-variant" id="variantBtn">EDITION: CRIMSON ARMOR</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Brand Strategy, Palette & SKU Architecture -->
+      <section class="details-stack">
+        <!-- 01. Brand Identity -->
+        <article class="cyber-panel section-card">
+          <div class="card-kicker">// 01. BRAND IDENTITY &amp; CONCEPT</div>
+          <h2 class="card-heading">NEO-GOTHIC CYBERPUNK AESTHETIC</h2>
+          <p class="body-text">
+            <strong>Lightning Rod Hydration</strong> fuses high-voltage Night City street-tech with an iconic neo-archaic battle cry: <em>"Zap it into thy bloodstream."</em> Matte obsidian aluminum is armored with jagged cyber-crimson plating, high-voltage yellow lightning arcs, and glowing cyan edge highlights.
+          </p>
+
+          <div class="pillars-grid">
+            <div class="pillar-box">
+              <div class="pillar-title">GLITCH TYPOGRAPHY</div>
+              <div class="pillar-desc">Slanted heavy display headers sliced with RGB chromatic aberration (<span style="color:#c5003c">#c5003c</span> &amp; <span style="color:#55ead4">#55ead4</span>) to simulate electrical interference.</div>
+            </div>
+            <div class="pillar-box">
+              <div class="pillar-title">TACTILE PACKAGING</div>
+              <div class="pillar-desc">Matte-black chilled aluminum contrasted with spot-gloss crimson armor panels and metallic cyan rim accents.</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02. Chromatic System -->
+        <article class="cyber-panel section-card">
+          <div class="card-kicker">// 02. CHROMATIC SYSTEM (CLICK HEX TO COPY)</div>
+          <h2 class="card-heading">5-COLOR HIGH-VOLTAGE PALETTE</h2>
+          <p class="body-text" style="font-size: 0.88rem;">
+            Built on a pure void-black base so the neon accents vibrate off the shelf with maximum contrast:
+          </p>
+
+          <div class="palette-grid">
+            <div class="swatch-card" data-hex="#000000">
+              <div class="swatch-color" style="background: #000000; border-bottom: 1px solid #262626;"></div>
+              <div class="swatch-info">
+                <div class="swatch-hex">#000000</div>
+                <div class="swatch-role">Void Base</div>
+              </div>
+            </div>
+
+            <div class="swatch-card" data-hex="#c5003c">
+              <div class="swatch-color" style="background: #c5003c;"></div>
+              <div class="swatch-info">
+                <div class="swatch-hex">#C5003C</div>
+                <div class="swatch-role">Cyber Crimson</div>
+              </div>
+            </div>
+
+            <div class="swatch-card" data-hex="#880425">
+              <div class="swatch-color" style="background: #880425;"></div>
+              <div class="swatch-info">
+                <div class="swatch-hex">#880425</div>
+                <div class="swatch-role">Core Crimson</div>
+              </div>
+            </div>
+
+            <div class="swatch-card" data-hex="#f3e600">
+              <div class="swatch-color" style="background: #f3e600;"></div>
+              <div class="swatch-info">
+                <div class="swatch-hex">#F3E600</div>
+                <div class="swatch-role">Volt Yellow</div>
+              </div>
+            </div>
+
+            <div class="swatch-card" data-hex="#55ead4">
+              <div class="swatch-color" style="background: #55ead4;"></div>
+              <div class="swatch-info">
+                <div class="swatch-hex">#55EAD4</div>
+                <div class="swatch-role">Synapse Cyan</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03. SKU Architecture -->
+        <article class="cyber-panel section-card">
+          <div class="card-kicker">// 03. LAUNCH SKU ARCHITECTURE</div>
+          <h2 class="card-heading">COLOR-CODED FLAVOR VARIANTS</h2>
+          <div class="pillars-grid">
+            <div class="pillar-box" style="border-left-color: #f3e600;">
+              <div class="pillar-title">01 // ARC SURGE (FLAGSHIP)</div>
+              <div class="pillar-desc">Dominant <span style="color:#f3e600">#F3E600</span> &amp; <span style="color:#c5003c">#C5003C</span>. Tart electric yuzu, Meyer lemon, and sea salt electrolytes.</div>
+            </div>
+            <div class="pillar-box" style="border-left-color: #55ead4;">
+              <div class="pillar-title">02 // SYNAPSE OVERCLOCK</div>
+              <div class="pillar-desc">Dominant <span style="color:#55ead4">#55EAD4</span> &amp; <span style="color:#880425">#880425</span>. Blood orange, blue raspberry, and prickly pear punch.</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04. Interactive Bio-Stream Telemetry Simulator -->
+        <article class="cyber-panel section-card" id="telemetryCard">
+          <div class="card-kicker">// 04. BIO-STREAM TELEMETRY SIMULATOR</div>
+          <h2 class="card-heading">HOLD TO CHARGE ELECTROLYTE DISCHARGE</h2>
+          <div class="telemetry-sim-wrap">
+            <div class="wave-canvas-box">
+              <canvas id="telemetryWaveCanvas"></canvas>
+            </div>
+            <div class="sim-metrics">
+              <div class="sim-metric-card">
+                <div class="sim-metric-label">CONDUCTIVITY</div>
+                <div class="sim-metric-val" id="metricConductivity">64%</div>
+              </div>
+              <div class="sim-metric-card">
+                <div class="sim-metric-label">SYNAPSE DELAY</div>
+                <div class="sim-metric-val" id="metricLatency">42 MS</div>
+              </div>
+              <div class="sim-metric-card">
+                <div class="sim-metric-label">BLOOD VOLTAGE</div>
+                <div class="sim-metric-val" id="metricVoltage">1.21 GV</div>
+              </div>
+            </div>
+            <div class="sim-action-row">
+              <div class="sim-status-row">
+                <span class="sim-status-text" id="simStatusText">STATUS: HOLD BUTTON TO CHARGE</span>
+                <span class="sim-tier-badge" id="simTierBadge">[TIER: STANDBY]</span>
+              </div>
+              <button type="button" class="hold-zap-btn" id="holdZapBtn" aria-label="Hold to charge Zap Into Bloodstream">
+                <div class="hold-fill-bar" id="holdFillBar"></div>
+                <div class="hold-btn-content">
+                  <span id="holdBtnLabel">&#9889; HOLD: ZAP INTO BLOODSTREAM</span>
+                  <span class="hold-pct-readout" id="holdPctReadout">0%</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <!-- Full-Width Brand Identity Logo Suite (01 - 06) -->
+    <section class="cyber-panel logo-suite-section">
+      <div class="suite-header-row">
+        <div>
+          <div class="card-kicker">// 05. BRAND IDENTITY LOGO SUITE</div>
+          <h2 class="card-heading" style="margin-bottom: 0;">COMPLETE 6-LOCKUP VECTOR SYSTEM</h2>
+        </div>
+        <span style="font-family: 'Share Tech Mono', monospace; font-size: 0.76rem; color: var(--synapse-cyan);">
+          TAP LOCKUP TO SELECT
+        </span>
+      </div>
+
+      <div class="logo-suite-grid">
+        <!-- 01 / PRIMARY LOGO -->
+        <div class="logo-card" data-logo="01 / PRIMARY LOGO">
+          <div class="logo-stage">
+            <svg width="240" height="150" viewBox="0 0 260 165" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="22,26 146,26 164,8 156,30 246,30 232,68 224,96 238,124 214,124 206,144 54,144 42,124 22,124 38,88 16,58" fill="#050507" stroke="#55ead4" stroke-width="2.5" />
+              <polygon points="154,12 118,76 138,76 116,136 168,66 144,66" fill="#f3e600" stroke="#000000" stroke-width="2" />
+              <text x="130" y="54" text-anchor="middle" fill="#f3e600" stroke="#000000" stroke-width="3" paint-order="stroke" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="25" letter-spacing="1">LIGHTNING</text>
+              <text x="108" y="80" text-anchor="middle" fill="#f3e600" stroke="#000000" stroke-width="3" paint-order="stroke" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="25" letter-spacing="1">ROD</text>
+              <text x="130" y="108" text-anchor="middle" fill="#55ead4" stroke="#000000" stroke-width="3" paint-order="stroke" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="23" letter-spacing="1.5">HYDRATION</text>
+              <polygon points="36,118 224,118 216,138 44,138" fill="#c5003c" stroke="#55ead4" stroke-width="1.2" />
+              <text id="svgPrimaryTagline" x="130" y="131" text-anchor="middle" fill="#ffffff" font-family="Chakra Petch, sans-serif" font-weight="700" font-size="9.5" letter-spacing="1.2">ZAP IT INTO THY BLOODSTREAM</text>
+            </svg>
+          </div>
+          <div class="logo-caption">[ 01 / PRIMARY LOGO ]</div>
+        </div>
+
+        <!-- 02 / ICON LOGO -->
+        <div class="logo-card" data-logo="02 / ICON LOGO">
+          <div class="logo-stage">
+            <svg width="170" height="150" viewBox="0 0 180 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="90" cy="80" r="62" stroke="#f3e600" stroke-width="2" stroke-dasharray="28 8 10 8" />
+              <circle cx="90" cy="80" r="53" stroke="#55ead4" stroke-width="4" stroke-dasharray="45 12" />
+              <circle cx="90" cy="80" r="45" stroke="#c5003c" stroke-width="2" stroke-dasharray="18 14" />
+              <polygon points="90,8 85,18 95,18" fill="#f3e600" />
+              <polygon points="90,152 85,142 95,142" fill="#f3e600" />
+              <polygon points="18,80 28,75 28,85" fill="#f3e600" />
+              <polygon points="162,80 152,75 152,85" fill="#f3e600" />
+              <rect x="24" y="64" width="22" height="3" fill="#c5003c" />
+              <rect x="134" y="92" width="24" height="3" fill="#55ead4" />
+              <path d="M74 44 L54 88 L76 88 L64 118 L92 80 L72 80 L84 44 Z" fill="#f3e600" stroke="#55ead4" stroke-width="1.5" />
+              <path d="M88 54 L122 54 L116 78 L98 78 L118 106 L102 106 L84 80 L80 94" stroke="#f3e600" stroke-width="7" stroke-linecap="square" stroke-linejoin="miter" />
+              <path d="M88 54 L122 54 L116 78 L98 78 L118 106" stroke="#55ead4" stroke-width="2" fill="none" />
+            </svg>
+          </div>
+          <div class="logo-caption">[ 02 / ICON LOGO ]</div>
+        </div>
+
+        <!-- 03 / WORDMARK -->
+        <div class="logo-card" data-logo="03 / WORDMARK">
+          <div class="logo-stage">
+            <svg width="240" height="150" viewBox="0 0 260 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <text x="132" y="54" text-anchor="middle" fill="#c5003c" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="27">LIGHTNING</text>
+              <text x="128" y="52" text-anchor="middle" fill="#55ead4" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="27">LIGHTNING</text>
+              <text x="130" y="53" text-anchor="middle" fill="#f3e600" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="27">LIGHTNING</text>
+
+              <text x="130" y="75" text-anchor="middle" fill="#f3e600" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="18" letter-spacing="3">ROD</text>
+
+              <text x="132" y="106" text-anchor="middle" fill="#c5003c" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="26">HYDRATION</text>
+              <text x="129" y="105" text-anchor="middle" fill="#55ead4" font-family="Orbitron, sans-serif" font-weight="900" font-style="italic" font-size="26">HYDRATION</text>
+
+              <line x1="20" y1="46" x2="240" y2="46" stroke="#050507" stroke-width="2" />
+              <line x1="25" y1="98" x2="235" y2="98" stroke="#050507" stroke-width="2" />
+            </svg>
+          </div>
+          <div class="logo-caption">[ 03 / WORDMARK ]</div>
+        </div>
+
+        <!-- 04 / MONOGRAM -->
+        <div class="logo-card" data-logo="04 / MONOGRAM">
+          <div class="logo-stage">
+            <svg width="180" height="150" viewBox="0 0 190 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="95,14 114,42 154,32 134,68 164,92 126,108 136,142 96,124 62,148 68,112 28,104 58,76 38,44 78,48" fill="rgba(85, 234, 212, 0.22)" stroke="#55ead4" stroke-width="1.5" />
+              <polygon points="78,24 44,96 74,96 58,138 112,84 82,84 96,24" fill="#880425" stroke="#c5003c" stroke-width="3" />
+              <polygon points="94,44 148,44 138,84 114,84 142,124 114,124 90,88" fill="#880425" stroke="#c5003c" stroke-width="3" />
+              <polygon points="74,20 40,92 70,92 54,134 108,80 78,80 92,20" fill="#f3e600" stroke="#000000" stroke-width="2" />
+              <polygon points="90,40 144,40 134,80 110,80 138,120 110,120 86,84" fill="#f3e600" stroke="#000000" stroke-width="2" />
+            </svg>
+          </div>
+          <div class="logo-caption">[ 04 / MONOGRAM ]</div>
+        </div>
+
+        <!-- 05 / MINIMAL LOGO -->
+        <div class="logo-card" data-logo="05 / MINIMAL LOGO">
+          <div class="logo-stage">
+            <svg width="190" height="150" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="32,34 52,34 52,102 82,102 82,120 32,120" fill="#f3e600" />
+              <polygon points="114,16 76,82 98,82 82,136 124,68 102,68" fill="#f3e600" />
+              <path d="M122 34 H164 L172 44 V72 L162 82 H146 L174 120 H152 L128 84 V120 H122 V34 Z M140 50 V68 H154 V50 H140 Z" fill="#55ead4" />
+            </svg>
+          </div>
+          <div class="logo-caption">[ 05 / MINIMAL LOGO ]</div>
+        </div>
+
+        <!-- 06 / DECORATIVE LOGO -->
+        <div class="logo-card" data-logo="06 / DECORATIVE LOGO">
+          <div class="logo-stage">
+            <svg width="180" height="155" viewBox="0 0 190 165" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="95,10 158,34 158,118 95,154 32,118 32,34" fill="#0a0a0d" stroke="#55ead4" stroke-width="2.5" />
+              <rect x="38" y="56" width="16" height="44" fill="#f3e600" />
+              <rect x="136" y="56" width="16" height="44" fill="#f3e600" />
+              <ellipse cx="95" cy="74" rx="28" ry="30" fill="#cbd5e1" stroke="#000000" stroke-width="2" />
+              <rect x="81" y="94" width="28" height="18" rx="4" fill="#94a3b8" stroke="#000000" stroke-width="2" />
+              <circle cx="84" cy="74" r="6" fill="#000000" />
+              <circle cx="84" cy="74" r="3.5" fill="#f3e600" />
+              <circle cx="106" cy="74" r="6" fill="#000000" />
+              <circle cx="106" cy="74" r="3.5" fill="#f3e600" />
+              <path d="M108 50 L124 62 L120 88" stroke="#c5003c" stroke-width="3" />
+              <line x1="87" y1="96" x2="87" y2="110" stroke="#000000" stroke-width="2" />
+              <line x1="95" y1="96" x2="95" y2="110" stroke="#000000" stroke-width="2" />
+              <line x1="103" y1="96" x2="103" y2="110" stroke="#000000" stroke-width="2" />
+              <path d="M36 36 Q95 14 154 36 L146 52 Q95 32 44 52 Z" fill="#c5003c" stroke="#f3e600" stroke-width="1.5" />
+              <text x="95" y="37" text-anchor="middle" fill="#f3e600" font-family="Orbitron, sans-serif" font-weight="900" font-size="10.5" letter-spacing="1">LIGHTNING ROD</text>
+              <path d="M36 112 Q95 134 154 112 L146 128 Q95 148 44 128 Z" fill="#c5003c" stroke="#f3e600" stroke-width="1.5" />
+              <text x="95" y="128" text-anchor="middle" fill="#f3e600" font-family="Orbitron, sans-serif" font-weight="900" font-size="10.5" letter-spacing="1">LIGHTNING ROD</text>
+              <path d="M46 132 Q95 152 144 132 L138 144 Q95 162 52 144 Z" fill="#f3e600" stroke="#000000" stroke-width="1.2" />
+              <text id="svgBadgeTagline" x="95" y="146" text-anchor="middle" fill="#000000" font-family="Chakra Petch, sans-serif" font-weight="700" font-size="6.4" letter-spacing="0.5">ZAP IT INTO THY BLOODSTREAM</text>
+            </svg>
+          </div>
+          <div class="logo-caption">[ 06 / DECORATIVE LOGO ]</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="copy-toast" id="copyToast">COPIED TO CLIPBOARD</div>
+
+  <script>
+    (function () {
+      /* ========================================================================
+         1. CORE DOM REFERENCES & HUD TOAST / CLIPBOARD HELPERS
+         ======================================================================== */
+      const rotateSlider = document.getElementById('rotateSlider');
+      const labelWrap = document.getElementById('labelWrap');
+      const angleReadout = document.getElementById('angleReadout');
+      const canWrapper = document.getElementById('canWrapper');
+      const energyCan = document.querySelector('.energy-can');
+      const productStage = document.getElementById('productStage');
+      const zapBtn = document.getElementById('zapBtn');
+      const variantBtn = document.getElementById('variantBtn');
+      const autoSpinBtn = document.getElementById('autoSpinBtn');
+      const spinStateLabel = document.getElementById('spinStateLabel');
+      const audioToggleBtn = document.getElementById('audioToggleBtn');
+      const shopPageLink = document.getElementById('shopPageLink');
+      const frontPanel = document.getElementById('frontPanel');
+      const canAura = document.getElementById('canAura');
+      const surgeFlashOverlay = document.getElementById('surgeFlashOverlay');
+      const copyToast = document.getElementById('copyToast');
+      const viewPills = document.querySelectorAll('.pill-btn[data-target]');
+
+      let toastTimer = null;
+
+      function showToast(message) {
+        if (!copyToast) return;
+        copyToast.textContent = message;
+        copyToast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          copyToast.classList.remove('show');
+        }, 2200);
+      }
+
+      function copyTextToClipboard(text) {
+        try {
+          const tempInput = document.createElement('textarea');
+          tempInput.value = text;
+          tempInput.setAttribute('readonly', '');
+          tempInput.style.position = 'fixed';
+          tempInput.style.opacity = '0';
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          document.execCommand('copy');
+          document.body.removeChild(tempInput);
+        } catch (err) {
+          // Ignore clipboard errors in restricted environments
+        }
+      }
+
+      /* ========================================================================
+         2. CYBERPUNK GLYPH SCRAMBLE TEXT DECODER
+         ======================================================================== */
+      class TextScramble {
+        constructor(el) {
+          this.el = el;
+          this.chars = '!<>-_\\/[]{}—=+*^?#01⚡';
+          this.frameRequest = null;
+          this.frame = 0;
+          this.queue = [];
+        }
+
+        setText(newText) {
+          const oldText = this.el.textContent || '';
+          const length = Math.max(oldText.length, newText.length);
+          this.queue = [];
+          for (let i = 0; i < length; i++) {
+            const from = oldText[i] || '';
+            const to = newText[i] || '';
+            const start = Math.floor(Math.random() * 14);
+            const end = start + Math.floor(Math.random() * 16);
+            this.queue.push({ from, to, start, end, char: '' });
+          }
+          cancelAnimationFrame(this.frameRequest);
+          this.frame = 0;
+          this.update();
+        }
+
+        update() {
+          let output = '';
+          let complete = 0;
+          for (let i = 0; i < this.queue.length; i++) {
+            const item = this.queue[i];
+            if (this.frame >= item.end) {
+              complete++;
+              output += item.to;
+            } else if (this.frame >= item.start) {
+              if (!item.char || Math.random() < 0.28) {
+                item.char = this.chars[Math.floor(Math.random() * this.chars.length)];
+              }
+              output += item.char;
+            } else {
+              output += item.from;
+            }
+          }
+          this.el.textContent = output;
+          if (complete < this.queue.length) {
+            this.frame++;
+            this.frameRequest = requestAnimationFrame(() => this.update());
+          }
+        }
+      }
+
+      const mainGlitchTitle = document.querySelector('.glitch-title');
+      const titleScrambler = mainGlitchTitle ? new TextScramble(mainGlitchTitle) : null;
+      if (titleScrambler) {
+        setTimeout(() => titleScrambler.setText('LIGHTNING ROD HYDRATION'), 180);
+        mainGlitchTitle.addEventListener('mouseenter', () => {
+          titleScrambler.setText('LIGHTNING ROD HYDRATION');
+        });
+      }
+
+      /* ========================================================================
+         3. WEB AUDIO SYNTHESIZER (ELECTRIC ARC CRACKLES & SUB-BASS DISCHARGE)
+         ======================================================================== */
+      let audioEnabled = true;
+      let sharedAudioCtx = null;
+
+      function getAudioContext() {
+        if (!audioEnabled) return null;
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return null;
+        if (!sharedAudioCtx) {
+          sharedAudioCtx = new AudioCtx();
+        }
+        if (sharedAudioCtx.state === 'suspended') {
+          sharedAudioCtx.resume();
+        }
+        return sharedAudioCtx;
+      }
+
+      function playUiTick(freq = 880) {
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(freq * 0.45, ctx.currentTime + 0.055);
+          gain.gain.setValueAtTime(0.05, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.06);
+        } catch (err) {
+          // Audio optional
+        }
+      }
+
+      // Reusable noise buffer for zero-allocation crackle playback on mobile
+      let cachedNoiseBuffer = null;
+      function getNoiseBuffer(ctx) {
+        if (cachedNoiseBuffer && cachedNoiseBuffer.sampleRate === ctx.sampleRate) {
+          return cachedNoiseBuffer;
+        }
+        const length = Math.floor(ctx.sampleRate * 0.35);
+        const buf = ctx.createBuffer(1, length, ctx.sampleRate);
+        const ch = buf.getChannelData(0);
+        for (let i = 0; i < length; i++) {
+          ch[i] = (Math.random() * 2 - 1) * Math.exp(-i / (length * 0.42));
+        }
+        cachedNoiseBuffer = buf;
+        return buf;
+      }
+
+      function playZapSynth(intensity = 0.85) {
+        try {
+          const ctx = getAudioContext();
+          if (!ctx) return;
+          const now = ctx.currentTime;
+          const clamped = Math.max(0.1, Math.min(1, intensity));
+
+          // Tier-scaled pitch sweep & duration
+          const startFreq = 280 + clamped * 760;
+          const endFreq = Math.max(36, 95 - clamped * 55);
+          const duration = 0.16 + clamped * 0.28;
+
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = clamped > 0.7 ? 'sawtooth' : 'triangle';
+          osc.frequency.setValueAtTime(startFreq, now);
+          osc.frequency.exponentialRampToValueAtTime(endFreq, now + duration);
+
+          gain.gain.setValueAtTime(0.08 + clamped * 0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(now);
+          osc.stop(now + duration);
+
+          // Harmonic overtone for high/max charge releases
+          if (clamped >= 0.35) {
+            const subOsc = ctx.createOscillator();
+            const subGain = ctx.createGain();
+            subOsc.type = 'sine';
+            subOsc.frequency.setValueAtTime(startFreq * 0.5, now);
+            subOsc.frequency.exponentialRampToValueAtTime(38, now + duration + 0.08);
+            subGain.gain.setValueAtTime(0.14 * clamped, now);
+            subGain.gain.exponentialRampToValueAtTime(0.001, now + duration + 0.08);
+            subOsc.connect(subGain);
+            subGain.connect(ctx.destination);
+            subOsc.start(now);
+            subOsc.stop(now + duration + 0.08);
+          }
+
+          // Electric plasma crackle burst
+          const noise = ctx.createBufferSource();
+          noise.buffer = getNoiseBuffer(ctx);
+
+          const filter = ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.value = 1400 + clamped * 1800;
+          filter.Q.value = 1.6;
+
+          const noiseGain = ctx.createGain();
+          noiseGain.gain.setValueAtTime(0.06 + clamped * 0.16, now);
+          noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+          noise.connect(filter);
+          filter.connect(noiseGain);
+          noiseGain.connect(ctx.destination);
+          noise.start(now);
+          noise.stop(now + duration);
+        } catch (err) {
+          // Audio optional
+        }
+      }
+
+      /* ========================================================================
+         4. OPTIMIZED CANVAS LIGHTNING & PLASMA ENGINE (NO SHADOWBLUR / CACHED SIZE)
+         ======================================================================== */
+      const lightningCanvas = document.getElementById('lightningCanvas');
+      const lCtx = lightningCanvas ? lightningCanvas.getContext('2d') : null;
+
+      let activePaletteColors = ['#f3e600', '#55ead4', '#c5003c'];
+      const bolts = [];
+      const sparks = [];
+      const shockwaves = [];
+      const pointer = { x: 0, y: 0, active: false };
+      let stageW = 320;
+      let stageH = 540;
+
+      function resizeLightningCanvas() {
+        if (!lightningCanvas || !productStage) return;
+        const rect = productStage.getBoundingClientRect();
+        stageW = Math.max(1, rect.width);
+        stageH = Math.max(1, rect.height);
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        lightningCanvas.width = Math.floor(stageW * dpr);
+        lightningCanvas.height = Math.floor(stageH * dpr);
+        if (lCtx) lCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function generateBoltSegments(x1, y1, x2, y2, displace) {
+        if (displace < 8) {
+          return [{ x1, y1, x2, y2 }];
+        }
+        const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+        const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+        return [
+          ...generateBoltSegments(x1, y1, midX, midY, displace * 0.5),
+          ...generateBoltSegments(midX, midY, x2, y2, displace * 0.5)
+        ];
+      }
+
+      function spawnLightningBolt(x1, y1, x2, y2, color, width = 2.2) {
+        if (bolts.length > 24) bolts.shift();
+        const segments = generateBoltSegments(x1, y1, x2, y2, 42);
+        bolts.push({
+          segments,
+          color: color || activePaletteColors[Math.floor(Math.random() * activePaletteColors.length)],
+          width,
+          life: 1.0,
+          decay: 0.065 + Math.random() * 0.04
+        });
+
+        for (let i = 0; i < 3; i++) {
+          if (sparks.length > 48) sparks.shift();
+          const angle = Math.random() * Math.PI * 2;
+          const speed = 1.2 + Math.random() * 2.6;
+          sparks.push({
+            x: x2,
+            y: y2,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            color: color || '#f3e600',
+            life: 1.0,
+            size: 2
+          });
+        }
+      }
+
+      function triggerMassiveCanvasSurge(boltCount = 10) {
+        const cx = stageW / 2;
+        const cy = stageH * 0.44;
+
+        shockwaves.push({
+          x: cx,
+          y: cy,
+          radius: 22,
+          maxRadius: Math.max(stageW, stageH) * 0.62,
+          life: 1.0
+        });
+
+        for (let i = 0; i < boltCount; i++) {
+          const angle = (Math.PI * 2 * i) / boltCount + (Math.random() - 0.5) * 0.25;
+          const dist = 120 + Math.random() * 125;
+          const tx = cx + Math.cos(angle) * dist;
+          const ty = cy + Math.sin(angle) * dist;
+          const col = activePaletteColors[i % activePaletteColors.length];
+          spawnLightningBolt(cx, cy, tx, ty, col, 2.5);
+        }
+      }
+
+      function triggerScreenFlash(withShake = true) {
+        if (surgeFlashOverlay) {
+          surgeFlashOverlay.classList.remove('flash-run');
+          requestAnimationFrame(() => surgeFlashOverlay.classList.add('flash-run'));
+        }
+        if (canAura) {
+          canAura.classList.add('boosted');
+          setTimeout(() => canAura.classList.remove('boosted'), 380);
+        }
+        if (withShake && productStage) {
+          productStage.classList.remove('stage-shake');
+          requestAnimationFrame(() => productStage.classList.add('stage-shake'));
+        }
+      }
+
+      if (productStage) {
+        productStage.addEventListener('mousemove', (e) => {
+          const rect = productStage.getBoundingClientRect();
+          pointer.x = e.clientX - rect.left;
+          pointer.y = e.clientY - rect.top;
+          pointer.active = true;
+        });
+
+        productStage.addEventListener('mouseleave', () => {
+          pointer.active = false;
+        });
+      }
+
+      function stepLightningCanvas() {
+        if (!lCtx) return;
+        lCtx.clearRect(0, 0, stageW, stageH);
+
+        const cx = stageW / 2;
+        const cy = stageH * 0.44;
+
+        // Ambient periodic arcs around the can
+        if (Math.random() < 0.04) {
+          const side = Math.random() < 0.5 ? -1 : 1;
+          const startX = cx + side * 86;
+          const startY = cy + (Math.random() - 0.5) * 220;
+          const endX = cx + side * (120 + Math.random() * 48);
+          const endY = startY + (Math.random() - 0.5) * 95;
+          spawnLightningBolt(startX, startY, endX, endY, activePaletteColors[Math.floor(Math.random() * 2)], 1.6);
+        }
+
+        // Interactive cursor magnetism arc (desktop hover)
+        if (pointer.active && Math.random() < 0.2) {
+          const dx = pointer.x - cx;
+          const dy = pointer.y - cy;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 250) {
+            const rimX = cx + (dx / (dist || 1)) * 90;
+            const rimY = cy + (dy / (dist || 1)) * 130;
+            spawnLightningBolt(rimX, rimY, pointer.x, pointer.y, '#55ead4', 1.8);
+          }
+        }
+
+        // Draw shockwave rings
+        for (let i = shockwaves.length - 1; i >= 0; i--) {
+          const sw = shockwaves[i];
+          sw.radius += 13;
+          sw.life -= 0.05;
+          if (sw.life <= 0 || sw.radius >= sw.maxRadius) {
+            shockwaves.splice(i, 1);
+            continue;
+          }
+          lCtx.beginPath();
+          lCtx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+          lCtx.strokeStyle = `rgba(85, 234, 212, ${sw.life * 0.65})`;
+          lCtx.lineWidth = 2.5;
+          lCtx.stroke();
+        }
+
+        // Fast dual-pass stroke for neon glow without costly GPU shadowBlur
+        for (let i = bolts.length - 1; i >= 0; i--) {
+          const b = bolts[i];
+          b.life -= b.decay;
+          if (b.life <= 0) {
+            bolts.splice(i, 1);
+            continue;
+          }
+          lCtx.beginPath();
+          for (let j = 0; j < b.segments.length; j++) {
+            const seg = b.segments[j];
+            if (j === 0) lCtx.moveTo(seg.x1, seg.y1);
+            lCtx.lineTo(seg.x2, seg.y2);
+          }
+          lCtx.globalAlpha = Math.max(0, b.life * 0.35);
+          lCtx.strokeStyle = b.color;
+          lCtx.lineWidth = b.width * 2.8;
+          lCtx.stroke();
+
+          lCtx.globalAlpha = Math.max(0, b.life);
+          lCtx.lineWidth = b.width;
+          lCtx.stroke();
+        }
+
+        // Draw floating plasma sparks
+        for (let i = sparks.length - 1; i >= 0; i--) {
+          const sp = sparks[i];
+          sp.x += sp.vx;
+          sp.y += sp.vy;
+          sp.vy += 0.04;
+          sp.life -= 0.04;
+          if (sp.life <= 0) {
+            sparks.splice(i, 1);
+            continue;
+          }
+          lCtx.globalAlpha = Math.max(0, sp.life);
+          lCtx.fillStyle = sp.color;
+          lCtx.fillRect(sp.x, sp.y, sp.size, sp.size);
+        }
+        lCtx.globalAlpha = 1;
+      }
+
+      /* ========================================================================
+         5. 3D CAN INERTIA PHYSICS, TILT, AUTO-SPIN & EDITION SWITCHER
+         ======================================================================== */
+      let currentOffset = 0;
+      let targetOffset = null;
+      let velocity = 0;
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartOffset = 0;
+      let lastDragX = 0;
+      let autoSpin = false;
+      let autoSpinDir = 1;
+
+      function syncViewPillHighlight(offset) {
+        viewPills.forEach((pill) => {
+          const target = Number(pill.getAttribute('data-target'));
+          const isMatch = Math.abs(offset - target) < 65;
+          pill.classList.toggle('active', isMatch && !autoSpin);
+        });
+      }
+
+      function updateCanRotation(offset) {
+        const clamped = Math.max(0, Math.min(432, offset));
+        currentOffset = clamped;
+        if (rotateSlider) rotateSlider.value = Math.round(clamped);
+        if (labelWrap) labelWrap.style.transform = `translate3d(${-clamped}px, 0, 0)`;
+
+        const degrees = Math.round((clamped / 432) * 240);
+        let sectionName = 'FRONT LABEL';
+        if (clamped >= 110 && clamped < 320) {
+          sectionName = 'FORMULA MATRIX';
+        } else if (clamped >= 320) {
+          sectionName = 'SYSTEM TELEMETRY';
+        }
+        if (angleReadout) {
+          angleReadout.textContent = `VIEW: ${sectionName} (${degrees}°)`;
+        }
+        syncViewPillHighlight(clamped);
+      }
+
+      function stepCanPhysics() {
+        if (!isDragging) {
+          if (targetOffset !== null) {
+            const diff = targetOffset - currentOffset;
+            if (Math.abs(diff) < 0.6) {
+              updateCanRotation(targetOffset);
+              targetOffset = null;
+            } else {
+              updateCanRotation(currentOffset + diff * 0.16);
+            }
+          } else if (autoSpin) {
+            let next = currentOffset + 1.2 * autoSpinDir;
+            if (next >= 432) {
+              next = 432;
+              autoSpinDir = -1;
+            } else if (next <= 0) {
+              next = 0;
+              autoSpinDir = 1;
+            }
+            updateCanRotation(next);
+          } else if (Math.abs(velocity) > 0.12) {
+            let next = currentOffset + velocity;
+            if (next <= 0 || next >= 432) {
+              velocity = 0;
+            }
+            updateCanRotation(next);
+            velocity *= 0.91;
+          }
+        }
+      }
+
+      if (audioToggleBtn) {
+        audioToggleBtn.addEventListener('click', () => {
+          audioEnabled = !audioEnabled;
+          audioToggleBtn.textContent = audioEnabled ? '[AUDIO: ON]' : '[AUDIO: MUTED]';
+          audioToggleBtn.classList.toggle('muted', !audioEnabled);
+          if (audioEnabled) playUiTick(1040);
+          showToast(audioEnabled ? 'SYNTH AUDIO ENABLED' : 'SYNTH AUDIO MUTED');
+        });
+      }
+
+      if (shopPageLink) {
+        shopPageLink.addEventListener('click', () => {
+          playUiTick(980);
+        });
+      }
+
+      viewPills.forEach((pill) => {
+        pill.addEventListener('click', () => {
+          autoSpin = false;
+          velocity = 0;
+          if (autoSpinBtn) autoSpinBtn.classList.remove('active');
+          if (spinStateLabel) spinStateLabel.textContent = 'LOCKED VIEW';
+          targetOffset = Number(pill.getAttribute('data-target'));
+          playUiTick(760);
+        });
+      });
+
+      if (autoSpinBtn) {
+        autoSpinBtn.addEventListener('click', () => {
+          autoSpin = !autoSpin;
+          targetOffset = null;
+          velocity = 0;
+          autoSpinBtn.classList.toggle('active', autoSpin);
+          if (spinStateLabel) spinStateLabel.textContent = autoSpin ? 'AUTO-SWEEP' : 'MANUAL';
+          playUiTick(autoSpin ? 940 : 620);
+        });
+      }
+
+      if (rotateSlider) {
+        rotateSlider.addEventListener('input', (e) => {
+          autoSpin = false;
+          targetOffset = null;
+          velocity = 0;
+          if (autoSpinBtn) autoSpinBtn.classList.remove('active');
+          if (spinStateLabel) spinStateLabel.textContent = 'MANUAL';
+          updateCanRotation(Number(e.target.value));
+        });
+      }
+
+      if (canWrapper) {
+        canWrapper.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          autoSpin = false;
+          targetOffset = null;
+          velocity = 0;
+          if (autoSpinBtn) autoSpinBtn.classList.remove('active');
+          if (spinStateLabel) spinStateLabel.textContent = 'DRAGGING';
+          dragStartX = e.clientX;
+          lastDragX = e.clientX;
+          dragStartOffset = currentOffset;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - dragStartX;
+          velocity = (lastDragX - e.clientX) * 0.45;
+          lastDragX = e.clientX;
+          updateCanRotation(dragStartOffset - dx * 1.15);
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (!isDragging) return;
+          isDragging = false;
+          if (spinStateLabel) spinStateLabel.textContent = 'MANUAL';
+        });
+
+        canWrapper.addEventListener('touchstart', (e) => {
+          if (!e.touches || !e.touches.length) return;
+          isDragging = true;
+          autoSpin = false;
+          targetOffset = null;
+          velocity = 0;
+          if (autoSpinBtn) autoSpinBtn.classList.remove('active');
+          if (spinStateLabel) spinStateLabel.textContent = 'DRAGGING';
+          dragStartX = e.touches[0].clientX;
+          lastDragX = dragStartX;
+          dragStartOffset = currentOffset;
+        }, { passive: true });
+
+        canWrapper.addEventListener('touchmove', (e) => {
+          if (!isDragging || !e.touches || !e.touches.length) return;
+          const touchX = e.touches[0].clientX;
+          const dx = touchX - dragStartX;
+          velocity = (lastDragX - touchX) * 0.45;
+          lastDragX = touchX;
+          updateCanRotation(dragStartOffset - dx * 1.2);
+        }, { passive: true });
+
+        canWrapper.addEventListener('touchend', () => {
+          if (!isDragging) return;
+          isDragging = false;
+          if (spinStateLabel) spinStateLabel.textContent = 'MANUAL';
+        });
+
+        // Subtle 3D tilt on desktop hover
+        canWrapper.addEventListener('mousemove', (e) => {
+          if (isDragging || !energyCan) return;
+          const rect = canWrapper.getBoundingClientRect();
+          const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+          const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+          energyCan.style.transform = `perspective(700px) rotateY(${nx * 8}deg) rotateX(${-ny * 5}deg)`;
+        });
+
+        canWrapper.addEventListener('mouseleave', () => {
+          if (energyCan) {
+            energyCan.style.transform = 'perspective(700px) rotateY(0deg) rotateX(0deg)';
+          }
+        });
+      }
+
+      /* ========================================================================
+         6. EDITION / COLORWAY SWITCHER (SOFT RADIAL GLOW + SVG ARMOR)
+         ======================================================================== */
+      const EDITIONS = [
+        {
+          name: 'CRIMSON ARMOR',
+          primary: '#c5003c',
+          secondary: '#880425',
+          bolt: '#f3e600',
+          rim: '#55ead4',
+          arcColors: ['#f3e600', '#55ead4', '#c5003c'],
+          aura: 'radial-gradient(ellipse closest-side at center, rgba(197, 0, 60, 0.58) 0%, rgba(243, 230, 0, 0.24) 38%, rgba(85, 234, 212, 0.12) 64%, rgba(0, 0, 0, 0) 100%)'
+        },
+        {
+          name: 'SYNAPSE CYAN',
+          primary: '#0891b2',
+          secondary: '#164e63',
+          bolt: '#55ead4',
+          rim: '#f3e600',
+          arcColors: ['#55ead4', '#f3e600', '#06b6d4'],
+          aura: 'radial-gradient(ellipse closest-side at center, rgba(85, 234, 212, 0.56) 0%, rgba(8, 145, 178, 0.26) 40%, rgba(243, 230, 0, 0.12) 66%, rgba(0, 0, 0, 0) 100%)'
+        },
+        {
+          name: 'VOLT OVERLOAD',
+          primary: '#ca8a04',
+          secondary: '#713f12',
+          bolt: '#f3e600',
+          rim: '#c5003c',
+          arcColors: ['#f3e600', '#c5003c', '#55ead4'],
+          aura: 'radial-gradient(ellipse closest-side at center, rgba(243, 230, 0, 0.56) 0%, rgba(197, 0, 60, 0.25) 40%, rgba(85, 234, 212, 0.12) 66%, rgba(0, 0, 0, 0) 100%)'
+        }
+      ];
+
+      let editionIdx = 0;
+
+      function applyEdition(idx) {
+        const ed = EDITIONS[idx % EDITIONS.length];
+        activePaletteColors = ed.arcColors;
+        if (variantBtn) {
+          variantBtn.textContent = `EDITION: ${ed.name}`;
+        }
+        if (canAura) {
+          canAura.style.background = ed.aura;
+        }
+        if (frontPanel) {
+          frontPanel.querySelectorAll('.armor-primary').forEach((el) => el.setAttribute('fill', ed.primary));
+          frontPanel.querySelectorAll('.armor-secondary').forEach((el) => el.setAttribute('fill', ed.secondary));
+          frontPanel.querySelectorAll('.armor-bolt-stroke').forEach((el) => el.setAttribute('stroke', ed.bolt));
+          frontPanel.querySelectorAll('.armor-rim-stroke').forEach((el) => el.setAttribute('stroke', ed.rim));
+        }
+      }
+
+      if (variantBtn) {
+        variantBtn.addEventListener('click', () => {
+          editionIdx = (editionIdx + 1) % EDITIONS.length;
+          applyEdition(editionIdx);
+          triggerMassiveCanvasSurge(6);
+          playUiTick(840);
+          showToast(`EDITION: ${EDITIONS[editionIdx].name}`);
+        });
+      }
+
+      if (zapBtn) {
+        zapBtn.addEventListener('click', () => {
+          surgeBoost = 1.0;
+          triggerMassiveCanvasSurge(12);
+          triggerScreenFlash(true);
+          playZapSynth(0.92);
+          showToast('⚡ HIGH-VOLTAGE SURGE DISCHARGED');
+        });
+      }
+
+      /* ========================================================================
+         7. HOLD-TO-CHARGE TRIGGER (0%–100%) & BIO-STREAM TELEMETRY OSCILLOSCOPE
+         ======================================================================== */
+      const telemetryCanvas = document.getElementById('telemetryWaveCanvas');
+      const tCtx = telemetryCanvas ? telemetryCanvas.getContext('2d') : null;
+      const holdZapBtn = document.getElementById('holdZapBtn');
+      const holdFillBar = document.getElementById('holdFillBar');
+      const holdBtnLabel = document.getElementById('holdBtnLabel');
+      const holdPctReadout = document.getElementById('holdPctReadout');
+      const simStatusText = document.getElementById('simStatusText');
+      const simTierBadge = document.getElementById('simTierBadge');
+      const metricConductivity = document.getElementById('metricConductivity');
+      const metricLatency = document.getElementById('metricLatency');
+      const metricVoltage = document.getElementById('metricVoltage');
+
+      let waveW = 300;
+      let waveH = 92;
+      let wavePhase = 0;
+      let surgeBoost = 0;
+
+      let isCharging = false;
+      let chargePct = 0;
+      let chargeOsc1 = null;
+      let chargeOsc2 = null;
+      let chargeGain = null;
+
+      function resizeTelemetryCanvas() {
+        if (!telemetryCanvas || !telemetryCanvas.parentElement) return;
+        const rect = telemetryCanvas.parentElement.getBoundingClientRect();
+        waveW = Math.max(1, rect.width);
+        waveH = Math.max(1, rect.height);
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        telemetryCanvas.width = Math.floor(waveW * dpr);
+        telemetryCanvas.height = Math.floor(waveH * dpr);
+        if (tCtx) tCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function startChargeAudio() {
+        try {
+          const ctx = getAudioContext();
+          if (!ctx || chargeOsc1) return;
+          const now = ctx.currentTime;
+
+          chargeOsc1 = ctx.createOscillator();
+          chargeOsc2 = ctx.createOscillator();
+          chargeGain = ctx.createGain();
+
+          chargeOsc1.type = 'sawtooth';
+          chargeOsc2.type = 'triangle';
+          chargeOsc1.frequency.setValueAtTime(140, now);
+          chargeOsc2.frequency.setValueAtTime(280, now);
+
+          chargeGain.gain.setValueAtTime(0.001, now);
+          chargeGain.gain.linearRampToValueAtTime(0.075, now + 0.08);
+
+          chargeOsc1.connect(chargeGain);
+          chargeOsc2.connect(chargeGain);
+          chargeGain.connect(ctx.destination);
+
+          chargeOsc1.start(now);
+          chargeOsc2.start(now);
+        } catch (err) {
+          // Audio optional
+        }
+      }
+
+      function updateChargeAudioPitch(pct) {
+        if (!chargeOsc1 || !chargeOsc2 || !sharedAudioCtx) return;
+        try {
+          const now = sharedAudioCtx.currentTime;
+          const norm = Math.max(0, Math.min(1, pct / 100));
+          const baseFreq = 140 + Math.pow(norm, 1.35) * 760;
+          chargeOsc1.frequency.setTargetAtTime(baseFreq, now, 0.03);
+          chargeOsc2.frequency.setTargetAtTime(baseFreq * 1.5, now, 0.03);
+        } catch (err) {
+          // Audio optional
+        }
+      }
+
+      function stopChargeAudio() {
+        if (!chargeOsc1) return;
+        try {
+          const ctx = sharedAudioCtx;
+          const now = ctx ? ctx.currentTime : 0;
+          if (chargeGain && ctx) {
+            chargeGain.gain.setTargetAtTime(0.0001, now, 0.02);
+          }
+          const o1 = chargeOsc1;
+          const o2 = chargeOsc2;
+          setTimeout(() => {
+            try { o1.stop(); o1.disconnect(); } catch (e) {}
+            try { o2.stop(); o2.disconnect(); } catch (e) {}
+          }, 60);
+        } catch (err) {
+          // Audio optional
+        }
+        chargeOsc1 = null;
+        chargeOsc2 = null;
+        chargeGain = null;
+      }
+
+      function getChargeTier(pct) {
+        if (pct >= 100) {
+          return {
+            badge: '[TIER 04: 100% SINGULARITY OVERLOAD]',
+            status: 'DISCHARGE: MAXIMUM NEURAL OVERLOAD!',
+            bolts: 18,
+            shake: true,
+            toast: '⚡ 100% SINGULARITY OVERLOAD DISCHARGED!'
+          };
+        }
+        if (pct >= 70) {
+          return {
+            badge: '[TIER 03: CRIMSON OVERCLOCK]',
+            status: 'DISCHARGE: CRIMSON OVERCLOCK SURGE',
+            bolts: 12,
+            shake: true,
+            toast: `⚡ ${Math.round(pct)}% CRIMSON OVERCLOCK RELEASED`
+          };
+        }
+        if (pct >= 30) {
+          return {
+            badge: '[TIER 02: HIGH-VOLT SURGE]',
+            status: 'DISCHARGE: HIGH-VOLT ELECTROLYTE PULSE',
+            bolts: 7,
+            shake: false,
+            toast: `⚡ ${Math.round(pct)}% HIGH-VOLT SURGE RELEASED`
+          };
+        }
+        return {
+          badge: '[TIER 01: IONIC SPARK]',
+          status: 'DISCHARGE: MICRO-IONIC SPARK',
+          bolts: 3,
+          shake: false,
+          toast: `⚡ ${Math.round(pct)}% IONIC SPARK RELEASED`
+        };
+      }
+
+      function beginHoldCharge(e) {
+        if (e && e.cancelable) e.preventDefault();
+        if (isCharging) return;
+        isCharging = true;
+        chargePct = Math.max(chargePct, 4);
+        if (holdZapBtn) holdZapBtn.classList.add('charging');
+        if (holdBtnLabel) holdBtnLabel.textContent = '⚡ CHARGING CAPACITORS...';
+        if (simStatusText) simStatusText.textContent = 'STATUS: CHARGING BIO-STREAM...';
+        startChargeAudio();
+      }
+
+      function releaseHoldCharge() {
+        if (!isCharging) return;
+        isCharging = false;
+        stopChargeAudio();
+        if (holdZapBtn) holdZapBtn.classList.remove('charging');
+        if (holdBtnLabel) holdBtnLabel.textContent = '⚡ HOLD: ZAP INTO BLOODSTREAM';
+
+        const releasedPct = Math.max(5, Math.round(chargePct));
+        const tier = getChargeTier(releasedPct);
+
+        if (simStatusText) simStatusText.textContent = tier.status;
+        if (simTierBadge) simTierBadge.textContent = tier.badge;
+
+        surgeBoost = Math.max(0.35, releasedPct / 100);
+        triggerMassiveCanvasSurge(tier.bolts);
+        triggerScreenFlash(tier.shake);
+        playZapSynth(releasedPct / 100);
+        showToast(tier.toast);
+      }
+
+      if (holdZapBtn) {
+        holdZapBtn.addEventListener('pointerdown', beginHoldCharge);
+        holdZapBtn.addEventListener('pointerup', releaseHoldCharge);
+        holdZapBtn.addEventListener('pointerleave', releaseHoldCharge);
+        holdZapBtn.addEventListener('pointercancel', releaseHoldCharge);
+        holdZapBtn.addEventListener('contextmenu', (e) => e.preventDefault());
+      }
+
+      function stepChargeAndTelemetry(dt) {
+        if (isCharging) {
+          chargePct = Math.min(100, chargePct + dt * 48);
+          updateChargeAudioPitch(chargePct);
+          if (simTierBadge) {
+            if (chargePct >= 100) simTierBadge.textContent = '[MAX: 100% READY — RELEASE!]';
+            else if (chargePct >= 70) simTierBadge.textContent = '[CHARGING: CRIMSON OVERCLOCK]';
+            else if (chargePct >= 30) simTierBadge.textContent = '[CHARGING: HIGH-VOLT SURGE]';
+            else simTierBadge.textContent = '[CHARGING: IONIC SPARK]';
+          }
+        } else if (chargePct > 0) {
+          chargePct = Math.max(0, chargePct - dt * 115);
+        }
+
+        if (holdFillBar) {
+          holdFillBar.style.transform = `scaleX(${(chargePct / 100).toFixed(3)})`;
+        }
+        if (holdPctReadout) {
+          holdPctReadout.textContent = `${Math.round(chargePct)}%`;
+        }
+
+        if (surgeBoost > 0) {
+          surgeBoost = Math.max(0, surgeBoost - dt * 0.45);
+        }
+
+        const activeEnergy = Math.max(chargePct / 100, surgeBoost);
+        const cond = Math.round(64 + activeEnergy * 35);
+        const latency = Math.max(4, Math.round(42 - activeEnergy * 36));
+        const voltage = (1.21 + activeEnergy * 8.78).toFixed(2);
+
+        if (metricConductivity) metricConductivity.textContent = `${cond}%`;
+        if (metricLatency) metricLatency.textContent = `${latency} MS`;
+        if (metricVoltage) metricVoltage.textContent = `${voltage} GV`;
+
+        if (!tCtx) return;
+        tCtx.clearRect(0, 0, waveW, waveH);
+
+        wavePhase += 0.11 + activeEnergy * 0.24;
+        const midY = waveH / 2;
+        const amp = 10 + activeEnergy * 28;
+
+        // Primary Synapse Cyan trace
+        tCtx.beginPath();
+        tCtx.strokeStyle = '#55ead4';
+        tCtx.lineWidth = 2;
+        for (let x = 0; x <= waveW; x += 4) {
+          const y =
+            midY +
+            Math.sin(x * 0.045 + wavePhase) * amp +
+            Math.sin(x * 0.13 - wavePhase * 1.7) * (amp * 0.35);
+          if (x === 0) tCtx.moveTo(x, y);
+          else tCtx.lineTo(x, y);
+        }
+        tCtx.stroke();
+
+        // Secondary Volt Yellow harmonic trace
+        tCtx.beginPath();
+        tCtx.strokeStyle = activeEnergy > 0.65 ? '#c5003c' : '#f3e600';
+        tCtx.lineWidth = 1.4;
+        for (let x = 0; x <= waveW; x += 6) {
+          const y =
+            midY +
+            Math.cos(x * 0.06 - wavePhase * 1.3) * (amp * 0.65);
+          if (x === 0) tCtx.moveTo(x, y);
+          else tCtx.lineTo(x, y);
+        }
+        tCtx.stroke();
+      }
+
+      /* ========================================================================
+         8. PALETTE SWATCH COPY & LOGO LOCKUP SELECTION
+         ======================================================================== */
+      document.querySelectorAll('.swatch-card').forEach((card) => {
+        card.addEventListener('click', () => {
+          const hex = card.getAttribute('data-hex') || '';
+          copyTextToClipboard(hex.toUpperCase());
+          playUiTick(960);
+          showToast(`COPIED ${hex.toUpperCase()} TO CLIPBOARD`);
+        });
+      });
+
+      const logoCards = document.querySelectorAll('.logo-card');
+      logoCards.forEach((card) => {
+        card.addEventListener('click', () => {
+          logoCards.forEach((c) => c.classList.remove('selected-lockup'));
+          card.classList.add('selected-lockup');
+          const label = card.getAttribute('data-logo') || 'LOGO';
+          playUiTick(780);
+          showToast(`SELECTED: ${label}`);
+        });
+      });
+
+      /* ========================================================================
+         9. UNIFIED ANIMATION LOOP & RESPONSIVE RESIZE INIT
+         ======================================================================== */
+      let lastFrameTime = performance.now();
+
+      function mainLoop(now) {
+        const dt = Math.min(0.05, (now - lastFrameTime) / 1000);
+        lastFrameTime = now;
+
+        stepLightningCanvas();
+        stepCanPhysics();
+        stepChargeAndTelemetry(dt);
+
+        requestAnimationFrame(mainLoop);
+      }
+
+      window.addEventListener('resize', () => {
+        resizeLightningCanvas();
+        resizeTelemetryCanvas();
+      });
+
+      resizeLightningCanvas();
+      resizeTelemetryCanvas();
+      updateCanRotation(0);
+      requestAnimationFrame(mainLoop);
+    })();
+  </script>
+</body>
+</html>

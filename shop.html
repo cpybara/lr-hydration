@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIGHTNING ROD HYDRATION // SHOP</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Cyberpunk & Technical Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            void: '#000000',
+            crimson: '#c5003c',
+            deepcrimson: '#880425',
+            cyberyellow: '#f3e600',
+            electriccyan: '#55ead4',
+          },
+          fontFamily: {
+            display: ['Orbitron', 'sans-serif'],
+            mono: ['Share Tech Mono', 'monospace'],
+            sans: ['Inter', 'sans-serif'],
+          },
+          boxShadow: {
+            'neon-yellow': '0 0 18px rgba(243, 230, 0, 0.45)',
+            'neon-cyan': '0 0 18px rgba(85, 234, 212, 0.45)',
+            'neon-crimson': '0 0 20px rgba(197, 0, 60, 0.55)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Base Void Theme & Scrollbar */
+    html, body {
+      background-color: #000000;
+      color: #ffffff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #880425;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #c5003c;
+    }
+
+    /* Subtle CRT Scanline Overlay */
+    .crt-overlay {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.32) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(197, 0, 60, 0.03),
+        rgba(85, 234, 212, 0.02),
+        rgba(243, 230, 0, 0.03)
+      );
+      background-size: 100% 3px, 6px 100%;
+    }
+
+    /* Cyber Grid Background */
+    .cyber-grid {
+      background-image:
+        linear-gradient(to right, rgba(197, 0, 60, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(85, 234, 212, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    /* Price Switch Glitch Pulse */
+    @keyframes pricePulse {
+      0% { opacity: 0.25; transform: translateY(-2px); filter: blur(1px); }
+      50% { opacity: 1; transform: translateY(1px); color: #55ead4; }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    .price-updated {
+      animation: pricePulse 0.28s ease-out;
+    }
+
+    /* Subtle Hover Float for Product Artwork */
+    .product-card:hover .product-svg {
+      transform: translateY(-6px) scale(1.03);
+    }
+    .product-svg {
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Glitch Text Effect on Brand Title */
+    .glitch-title {
+      text-shadow: 2px 0 #c5003c, -2px 0 #55ead4;
+    }
+  </style>
+</head>
+<body class="bg-void text-white font-sans antialiased selection:bg-cyberyellow selection:text-void min-h-screen flex flex-col">
+
+  <!-- Non-interactive CRT Scanline Layer -->
+  <div class="crt-overlay fixed inset-0 pointer-events-none z-50"></div>
+
+  <!-- Top Telemetry Ticker -->
+  <div class="bg-deepcrimson/40 border-b border-crimson/50 text-xs font-mono py-1.5 px-4 text-center tracking-widest text-electriccyan">
+    ⚡ HIGH-VOLTAGE ELECTROLYTE DISPATCH // WORLDWIDE TELEPORTATION ACTIVE // ZAP IT INTO THY BLOODSTREAM ⚡
+  </div>
+
+  <!-- Sticky Navigation & Currency Header -->
+  <header class="sticky top-0 z-40 bg-void/90 backdrop-blur-md border-b border-crimson/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+
+      <!-- Brand Identity (Redirects to Main Page) -->
+      <a
+        href="index.html"
+        onclick="playCyberBlip(820, 0.06)"
+        title="Return to Main Page"
+        aria-label="Return to Lightning Rod Hydration Main Page"
+        class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-10 h-10 rounded-xl bg-crimson/20 border border-cyberyellow flex items-center justify-center shadow-neon-yellow group-hover:bg-cyberyellow group-hover:text-void transition-all">
+          <svg class="w-6 h-6 text-cyberyellow group-hover:text-void transition-colors" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
+          </svg>
+        </div>
+        <div>
+          <span class="font-display font-black text-base sm:text-lg tracking-wider text-white block leading-none glitch-title">
+            LIGHTNING ROD
+          </span>
+          <span class="font-mono text-[11px] tracking-[0.25em] text-electriccyan uppercase">
+            HYDRATION // SHOP
+          </span>
+        </div>
+      </a>
+
+      <!-- Navigation Links (Desktop) -->
+      <nav class="hidden md:flex items-center gap-6 font-mono text-sm tracking-wider">
+        <a href="#catalog" class="text-cyberyellow border-b-2 border-cyberyellow pb-1 font-bold">
+          01. SHOP DEPOT
+        </a>
+        <a href="#bundles" onclick="filterCategory('packs')" class="text-gray-400 hover:text-electriccyan transition-colors pb-1">
+          02. SUPPLY CRATES
+        </a>
+        <a href="#hardware" onclick="filterCategory('gear')" class="text-gray-400 hover:text-electriccyan transition-colors pb-1">
+          03. HARDWARE
+        </a>
+      </nav>
+
+      <!-- Right Controls: Currency Switcher + Cart Drawer Button -->
+      <div class="flex items-center gap-2.5 sm:gap-3 ml-auto md:ml-0">
+
+        <!-- Multi-Currency Selector (INR, USD, GBP, EUR) -->
+        <div class="flex items-center bg-zinc-950 border border-crimson/60 rounded-xl p-1" role="group" aria-label="Select Currency">
+          <span class="hidden sm:inline-block font-mono text-[11px] text-gray-400 px-2 uppercase">CUR:</span>
+          <button
+            type="button"
+            data-currency="INR"
+            onclick="setCurrency('INR')"
+            class="currency-btn px-2.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer">
+            ₹ INR
+          </button>
+          <button
+            type="button"
+            data-currency="USD"
+            onclick="setCurrency('USD')"
+            class="currency-btn px-2.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer">
+            $ USD
+          </button>
+          <button
+            type="button"
+            data-currency="GBP"
+            onclick="setCurrency('GBP')"
+            class="currency-btn px-2.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer">
+            £ GBP
+          </button>
+          <button
+            type="button"
+            data-currency="EUR"
+            onclick="setCurrency('EUR')"
+            class="currency-btn px-2.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer">
+            € EUR
+          </button>
+        </div>
+
+        <!-- Cart Button -->
+        <button
+          type="button"
+          onclick="toggleCart(true)"
+          class="relative flex items-center gap-2 bg-crimson/20 hover:bg-crimson/40 border border-crimson text-white px-3.5 py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold transition-all shadow-neon-crimson cursor-pointer">
+          <svg class="w-4 h-4 text-cyberyellow" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span class="hidden sm:inline">CART</span>
+          <span id="cart-count-badge" class="bg-cyberyellow text-void font-black px-1.5 py-0.5 rounded-md text-xs leading-none">
+            0
+          </span>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section id="top" class="relative cyber-grid border-b border-crimson/40 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-crimson/10 via-void/60 to-void pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-electriccyan/10 border border-electriccyan/40 text-electriccyan font-mono text-xs mb-4">
+            <span class="w-2 h-2 rounded-full bg-electriccyan animate-ping"></span>
+            ARMORY STOCK: 100% CHARGED // LIVE PRICING ENABLED
+          </div>
+          <h1 class="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight uppercase leading-none">
+            HYDRATION <span class="text-cyberyellow">SHOP</span>
+          </h1>
+          <p class="mt-3 text-gray-300 max-w-2xl text-sm sm:text-base font-sans">
+            Bio-engineered electrolyte surge formulations and tactical hardware. Select your regional currency above and deploy immediate bloodstream voltage.
+          </p>
+        </div>
+
+        <!-- Active Currency Telemetry Pill -->
+        <div class="bg-zinc-950/90 border border-electriccyan/40 rounded-2xl p-4 flex items-center gap-4 self-start lg:self-end">
+          <div class="w-10 h-10 rounded-xl bg-electriccyan/10 border border-electriccyan flex items-center justify-center text-electriccyan font-mono font-bold text-lg" id="active-currency-symbol">
+            ₹
+          </div>
+          <div>
+            <div class="font-mono text-xs text-gray-400 uppercase">ACTIVE BILLING CURRENCY</div>
+            <div class="font-display font-bold text-sm text-white" id="active-currency-label">
+              INDIAN RUPEE (INR)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter Controls -->
+      <div id="catalog" class="mt-8 pt-6 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2" id="filter-buttons">
+          <button
+            type="button"
+            data-filter="all"
+            onclick="filterCategory('all')"
+            class="filter-btn px-4 py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold uppercase transition-all cursor-pointer bg-cyberyellow text-void shadow-neon-yellow">
+            ALL ARSENAL (6)
+          </button>
+          <button
+            type="button"
+            data-filter="cans"
+            onclick="filterCategory('cans')"
+            class="filter-btn px-4 py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold uppercase transition-all cursor-pointer bg-zinc-900 text-gray-300 border border-zinc-800 hover:border-electriccyan hover:text-electriccyan">
+            SINGLE CANS (500ML)
+          </button>
+          <button
+            type="button"
+            data-filter="packs"
+            onclick="filterCategory('packs')"
+            class="filter-btn px-4 py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold uppercase transition-all cursor-pointer bg-zinc-900 text-gray-300 border border-zinc-800 hover:border-electriccyan hover:text-electriccyan">
+            TACTICAL CRATES
+          </button>
+          <button
+            type="button"
+            data-filter="gear"
+            onclick="filterCategory('gear')"
+            class="filter-btn px-4 py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold uppercase transition-all cursor-pointer bg-zinc-900 text-gray-300 border border-zinc-800 hover:border-electriccyan hover:text-electriccyan">
+            HARDWARE & PODS
+          </button>
+        </div>
+
+        <div class="font-mono text-xs text-gray-400">
+          SHOWING <span id="visible-count" class="text-electriccyan font-bold">6</span> ITEMS
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Product Grid -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      <!-- Products are dynamically injected here via JavaScript -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-crimson/40 bg-zinc-950/90 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-gray-400">
+      <div class="flex items-center gap-2">
+        <span class="text-cyberyellow font-bold">⚡ LIGHTNING ROD HYDRATION</span>
+        <span>// EST. 2026 BY SREYANSH BHOWMIK</span>
+      </div>
+      <div class="text-center sm:text-right">
+        WARNING: CONTAINS HIGH-DENSITY ELECTROLYTES & NEURAL FOCUS AGENTS.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Slide-Over Cart Drawer -->
+  <div id="cart-backdrop" onclick="toggleCart(false)" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <aside
+    id="cart-drawer"
+    aria-label="Shopping Cart"
+    class="fixed top-0 right-0 h-full w-full max-w-md bg-zinc-950 border-l border-crimson z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl">
+
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-crimson/50 flex items-center justify-between bg-void">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-cyberyellow"></span>
+        <h2 class="font-display font-bold text-lg tracking-wider text-white">SUPPLY MANIFEST</h2>
+      </div>
+      <button
+        type="button"
+        onclick="toggleCart(false)"
+        class="p-2 rounded-xl bg-zinc-900 hover:bg-crimson text-gray-300 hover:text-white transition-colors cursor-pointer"
+        aria-label="Close Cart">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Cart Items Container -->
+    <div id="cart-items-container" class="flex-grow overflow-y-auto p-5 space-y-4">
+      <!-- Cart items rendered dynamically -->
+    </div>
+
+    <!-- Drawer Footer / Totals -->
+    <div class="p-5 border-t border-crimson/50 bg-void space-y-4">
+      <div class="flex items-center justify-between font-mono text-xs text-electriccyan">
+        <span>TELEPORT DISPATCH</span>
+        <span>FREE // PRIORITY</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="font-mono text-sm text-gray-300 uppercase">TOTAL CHARGE</span>
+        <span id="cart-total-price" class="font-display font-black text-2xl text-cyberyellow">₹0</span>
+      </div>
+      <button
+        type="button"
+        id="checkout-cart-btn"
+        onclick="openCheckoutFromCart()"
+        class="w-full py-3.5 px-5 rounded-xl bg-cyberyellow hover:bg-yellow-300 text-void font-display font-black text-sm tracking-wider uppercase shadow-neon-yellow transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed">
+        ⚡ PROCEED TO CHECKOUT
+      </button>
+    </div>
+  </aside>
+
+  <!-- Express Buy Now / Checkout Modal -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+    <div class="relative w-full max-w-lg bg-zinc-950 border-2 border-cyberyellow rounded-2xl shadow-neon-yellow overflow-hidden">
+
+      <!-- Modal Top Bar -->
+      <div class="px-6 py-4 bg-void border-b border-crimson/50 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-cyberyellow">⚡</span>
+          <h3 class="font-display font-bold text-base sm:text-lg tracking-wider text-white uppercase">
+            DIRECT NEURAL CHECKOUT
+          </h3>
+        </div>
+        <button
+          type="button"
+          onclick="closeCheckoutModal()"
+          class="p-1.5 rounded-lg bg-zinc-900 hover:bg-crimson text-gray-400 hover:text-white transition-colors cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Checkout Form View -->
+      <div id="checkout-form-view" class="p-6 space-y-5">
+        <!-- Order Summary Box -->
+        <div class="bg-void border border-electriccyan/40 rounded-xl p-4 space-y-2.5">
+          <div class="flex items-center justify-between font-mono text-xs text-electriccyan">
+            <span>ORDER PAYLOAD</span>
+            <span id="checkout-currency-tag">CURRENCY: INR</span>
+          </div>
+          <div id="checkout-summary-list" class="space-y-1.5 max-h-36 overflow-y-auto text-sm font-sans text-gray-200">
+            <!-- Summary items -->
+          </div>
+          <div class="pt-2.5 border-t border-zinc-800 flex items-center justify-between">
+            <span class="font-mono text-xs text-gray-400">TOTAL DUE</span>
+            <span id="checkout-total-display" class="font-display font-black text-xl text-cyberyellow">₹0</span>
+          </div>
+        </div>
+
+        <!-- Recipient Details -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-mono text-xs text-gray-400 mb-1">OPERATIVE CALLSIGN</label>
+            <input
+              type="text"
+              id="checkout-name"
+              value="V. CYBERRUNNER"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-void border border-zinc-700 focus:border-electriccyan focus:outline-none font-mono text-sm text-white" />
+          </div>
+          <div>
+            <label class="block font-mono text-xs text-gray-400 mb-1">DROP COORDINATES</label>
+            <input
+              type="text"
+              id="checkout-sector"
+              value="SECTOR 7G // NEO-GRID"
+              class="w-full px-3.5 py-2.5 rounded-xl bg-void border border-zinc-700 focus:border-electriccyan focus:outline-none font-mono text-sm text-white" />
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div>
+          <label class="block font-mono text-xs text-gray-400 mb-1.5">PAYMENT PROTOCOL</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="selectPayment(this)" class="pay-method-btn py-2 px-3 rounded-xl border border-cyberyellow bg-cyberyellow/15 text-cyberyellow font-mono text-xs font-bold cursor-pointer">
+              CREDIT CHIP
+            </button>
+            <button type="button" onclick="selectPayment(this)" class="pay-method-btn py-2 px-3 rounded-xl border border-zinc-700 bg-void text-gray-400 font-mono text-xs font-bold cursor-pointer">
+              UPI / INSTANT
+            </button>
+            <button type="button" onclick="selectPayment(this)" class="pay-method-btn py-2 px-3 rounded-xl border border-zinc-700 bg-void text-gray-400 font-mono text-xs font-bold cursor-pointer">
+              CRYPTO-VOLT
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onclick="confirmTransaction()"
+          class="w-full py-3.5 px-6 rounded-xl bg-crimson hover:bg-red-600 text-white font-display font-black text-sm tracking-widest uppercase shadow-neon-crimson transition-all cursor-pointer">
+          ⚡ AUTHORIZE SURGE TRANSACTION
+        </button>
+      </div>
+
+      <!-- Transaction Success View -->
+      <div id="checkout-success-view" class="hidden p-8 text-center space-y-4">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-electriccyan/20 border-2 border-electriccyan flex items-center justify-center text-electriccyan shadow-neon-cyan">
+          <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h4 class="font-display font-black text-2xl text-cyberyellow tracking-wide">
+          SURGE AUTHORIZED!
+        </h4>
+        <p class="text-sm text-gray-300 max-w-sm mx-auto">
+          Your Lightning Rod Hydration payload has been queued for high-voltage dispatch.
+        </p>
+        <div class="inline-block px-4 py-2 rounded-xl bg-void border border-crimson/60 font-mono text-xs text-electriccyan" id="order-receipt-id">
+          TXN-ID: #LRH-884920
+        </div>
+        <div class="pt-3">
+          <button
+            type="button"
+            onclick="closeCheckoutModal()"
+            class="px-6 py-3 rounded-xl bg-cyberyellow text-void font-display font-bold text-xs uppercase tracking-wider cursor-pointer">
+            RETURN TO SHOP
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Non-Intrusive Toast Notification -->
+  <div
+    id="cyber-toast"
+    class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-zinc-950 border border-electriccyan shadow-neon-cyan rounded-xl px-4 py-3 flex items-center gap-3">
+      <span class="w-2.5 h-2.5 rounded-full bg-electriccyan animate-pulse"></span>
+      <span id="cyber-toast-msg" class="font-mono text-xs sm:text-sm text-white">ITEM ADDED TO MANIFEST</span>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Currency Configuration
+     * Supports INR (₹), USD ($), GBP (£), and EUR (€)
+     */
+    const CURRENCIES = {
+      INR: { code: 'INR', symbol: '₹', label: 'INDIAN RUPEE (INR)', locale: 'en-IN', decimals: 0 },
+      USD: { code: 'USD', symbol: '$', label: 'US DOLLAR (USD)', locale: 'en-US', decimals: 2 },
+      GBP: { code: 'GBP', symbol: '£', label: 'BRITISH POUND (GBP)', locale: 'en-GB', decimals: 2 },
+      EUR: { code: 'EUR', symbol: '€', label: 'EUROZONE EURO (EUR)', locale: 'de-DE', decimals: 2 }
+    };
+
+    let currentCurrency = 'INR';
+    let currentFilter = 'all';
+    let cart = [];
+    let activeCheckoutItems = [];
+    let isBuyNowFlow = false;
+
+    /**
+     * Complete Lightning Rod Hydration Product Catalog
+     * Includes custom inline SVG product renders and curated regional retail pricing
+     */
+    const PRODUCTS = [
+      {
+        id: 'volt-overload-500',
+        name: 'VOLT OVERLOAD',
+        subtitle: 'HIGH-VOLTAGE CITRUS STATIC // 500ML',
+        category: 'cans',
+        badge: 'FLAGSHIP FORMULA',
+        badgeColor: 'bg-cyberyellow text-void',
+        accentColor: '#f3e600',
+        specs: ['300MG CAFFEINE', '1200MG ELECTROLYTES', '0G SUGAR'],
+        voltage: '98,000V',
+        prices: { INR: 349, USD: 3.99, GBP: 3.19, EUR: 3.69 },
+        svgType: 'can-yellow'
+      },
+      {
+        id: 'crimson-armor-500',
+        name: 'CRIMSON ARMOR',
+        subtitle: 'BLOOD-ORANGE PLASMA // 500ML',
+        category: 'cans',
+        badge: 'MAX STIMULANT',
+        badgeColor: 'bg-crimson text-white',
+        accentColor: '#c5003c',
+        specs: ['350MG CAFFEINE', 'ALPHA-GPC FOCUS', 'TAURINE + B12'],
+        voltage: '120,000V',
+        prices: { INR: 379, USD: 4.29, GBP: 3.39, EUR: 3.99 },
+        svgType: 'can-crimson'
+      },
+      {
+        id: 'cryo-static-500',
+        name: 'CRYO-STATIC ZERO',
+        subtitle: 'GLACIER MINT & CYAN BERRY // 500ML',
+        category: 'cans',
+        badge: 'HYDRATION MATRIX',
+        badgeColor: 'bg-electriccyan text-void',
+        accentColor: '#55ead4',
+        specs: ['250MG CAFFEINE', 'COCONUT WATER', 'ZERO CALORIES'],
+        voltage: '85,000V',
+        prices: { INR: 349, USD: 3.99, GBP: 3.19, EUR: 3.69 },
+        svgType: 'can-cyan'
+      },
+      {
+        id: 'arc-reactor-12pack',
+        name: '12-PACK ARC CRATE',
+        subtitle: 'SQUADRON MIXED SUPPLY (4X EACH FLAVOR)',
+        category: 'packs',
+        badge: 'SAVE 15% // POPULAR',
+        badgeColor: 'bg-cyberyellow text-void',
+        accentColor: '#f3e600',
+        specs: ['12 X 500ML CANS', 'ALL 3 FLAVORS', 'REINFORCED CASE'],
+        voltage: '1.2 MV',
+        prices: { INR: 3599, USD: 42.00, GBP: 32.99, EUR: 38.99 },
+        svgType: 'crate-12'
+      },
+      {
+        id: 'grid-overload-24pack',
+        name: '24-PACK GRID OVERLOAD',
+        subtitle: 'HEAVY BUNKER RESERVES // FULL CASE',
+        category: 'packs',
+        badge: 'BEST VALUE',
+        badgeColor: 'bg-crimson text-white',
+        accentColor: '#c5003c',
+        specs: ['24 X 500ML CANS', 'PRIORITY DISPATCH', 'COLLECTOR STICKERS'],
+        voltage: '2.4 MV',
+        prices: { INR: 6799, USD: 79.00, GBP: 61.99, EUR: 72.99 },
+        svgType: 'crate-24'
+      },
+      {
+        id: 'conductor-shaker-kit',
+        name: 'CONDUCTOR TITANIUM SHAKER + PODS',
+        subtitle: '750ML MATTE VESSEL + 10 SURGE STICKS',
+        category: 'gear',
+        badge: 'TACTICAL HARDWARE',
+        badgeColor: 'bg-electriccyan text-void',
+        accentColor: '#55ead4',
+        specs: ['STEEL VORTEX BALL', '10X SURGE PACKETS', 'LEAKPROOF LOCK'],
+        voltage: 'HARDWARE',
+        prices: { INR: 2499, USD: 29.99, GBP: 23.99, EUR: 27.99 },
+        svgType: 'shaker-kit'
+      }
+    ];
+
+    /**
+     * Generates bespoke Cyberpunk Vector Artwork for each product
+     */
+    function getProductSVG(type) {
+      if (type.startsWith('can-')) {
+        const colorMap = {
+          'can-yellow': { primary: '#f3e600', secondary: '#c5003c', glow: 'rgba(243,230,0,0.35)', label: 'VOLT' },
+          'can-crimson': { primary: '#c5003c', secondary: '#f3e600', glow: 'rgba(197,0,60,0.45)', label: 'ARMOR' },
+          'can-cyan': { primary: '#55ead4', secondary: '#c5003c', glow: 'rgba(85,234,212,0.35)', label: 'CRYO' }
+        };
+        const c = colorMap[type];
+        return `
+          <svg class="product-svg w-36 h-44 mx-auto drop-shadow-2xl" viewBox="0 0 160 200" fill="none">
+            <defs>
+              <radialGradient id="glow-${type}" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="${c.primary}" stop-opacity="0.32" />
+                <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="body-${type}" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0a0a0a" />
+                <stop offset="30%" stop-color="#1c1c1e" />
+                <stop offset="70%" stop-color="#09090b" />
+                <stop offset="100%" stop-color="#000000" />
+              </linearGradient>
+            </defs>
+            <circle cx="80" cy="100" r="78" fill="url(#glow-${type})" />
+            <!-- Can Top Rim -->
+            <path d="M52 24 L108 24 L114 34 L46 34 Z" fill="#52525b" />
+            <rect x="48" y="21" width="64" height="4" rx="2" fill="#a1a1aa" />
+            <!-- Can Main Cylinder -->
+            <rect x="44" y="34" width="72" height="134" rx="8" fill="url(#body-${type})" stroke="${c.primary}" stroke-width="2" />
+            <!-- Cyber Accent Stripes -->
+            <path d="M44 52 L116 44 L116 50 L44 58 Z" fill="${c.secondary}" />
+            <path d="M44 148 L116 140 L116 146 L44 154 Z" fill="${c.primary}" />
+            <!-- Central Lightning Rod Emblem -->
+            <path d="M86 64 L64 102 H80 L74 134 L98 94 H82 L86 64 Z" fill="${c.primary}" stroke="#000" stroke-width="1.5" />
+            <!-- Vertical Tech Label -->
+            <text x="80" y="162" text-anchor="middle" fill="${c.primary}" font-family="Orbitron, sans-serif" font-weight="900" font-size="9" letter-spacing="1.5">${c.label}</text>
+            <!-- Can Base -->
+            <path d="M46 168 L114 168 L108 176 L52 176 Z" fill="#3f3f46" />
+          </svg>
+        `;
+      }
+
+      if (type === 'crate-12' || type === 'crate-24') {
+        const is24 = type === 'crate-24';
+        const mainCol = is24 ? '#c5003c' : '#f3e600';
+        const subCol = is24 ? '#f3e600' : '#55ead4';
+        return `
+          <svg class="product-svg w-44 h-44 mx-auto" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="82" fill="${mainCol}" fill-opacity="0.12" />
+            <!-- Back Row Mini Cans -->
+            <rect x="46" y="46" width="24" height="54" rx="4" fill="#18181b" stroke="#55ead4" stroke-width="1.5" />
+            <rect x="74" y="42" width="24" height="58" rx="4" fill="#18181b" stroke="#f3e600" stroke-width="1.5" />
+            <rect x="102" y="42" width="24" height="58" rx="4" fill="#18181b" stroke="#c5003c" stroke-width="1.5" />
+            <rect x="130" y="46" width="24" height="54" rx="4" fill="#18181b" stroke="#55ead4" stroke-width="1.5" />
+            <!-- Tactical Crate Box -->
+            <rect x="34" y="84" width="132" height="78" rx="10" fill="#09090b" stroke="${mainCol}" stroke-width="2.5" />
+            <path d="M34 104 H166" stroke="${subCol}" stroke-width="1.5" stroke-dasharray="6 4" />
+            <!-- Bolt Icon on Crate -->
+            <path d="M104 112 L88 134 H99 L95 152 L112 130 H101 L104 112 Z" fill="${mainCol}" />
+            <text x="100" y="98" text-anchor="middle" fill="#ffffff" font-family="Orbitron, sans-serif" font-weight="800" font-size="10" letter-spacing="2">
+              ${is24 ? '24X OVERLOAD' : '12X ARC CRATE'}
+            </text>
+          </svg>
+        `;
+      }
+
+      // Shaker + Pods Hardware SVG
+      return `
+        <svg class="product-svg w-44 h-44 mx-auto" viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="80" fill="#55ead4" fill-opacity="0.12" />
+          <!-- Shaker Bottle -->
+          <rect x="56" y="32" width="56" height="14" rx="4" fill="#27272a" stroke="#55ead4" stroke-width="1.5" />
+          <rect x="64" y="24" width="24" height="8" rx="2" fill="#55ead4" />
+          <path d="M54 46 H114 L108 166 C108 170 104 172 100 172 H68 C64 172 60 170 60 166 L54 46 Z" fill="#09090b" stroke="#55ead4" stroke-width="2" />
+          <!-- Measurement Window -->
+          <rect x="78" y="62" width="12" height="88" rx="4" fill="#18181b" stroke="#f3e600" stroke-width="1" />
+          <path d="M86 84 L76 104 H84 L81 122 L92 100 H84 L86 84 Z" fill="#f3e600" />
+          <!-- Electrolyte Surge Stick Packets -->
+          <rect x="122" y="88" width="22" height="78" rx="4" transform="rotate(8 122 88)" fill="#18181b" stroke="#c5003c" stroke-width="1.8" />
+          <rect x="134" y="94" width="22" height="78" rx="4" transform="rotate(16 134 94)" fill="#09090b" stroke="#f3e600" stroke-width="1.8" />
+        </svg>
+      `;
+    }
+
+    /**
+     * Format price dynamically according to selected currency (INR, USD, GBP, EUR)
+     */
+    function formatPrice(productOrAmount, isRawAmount = false) {
+      const cfg = CURRENCIES[currentCurrency];
+      const value = isRawAmount ? productOrAmount : productOrAmount.prices[currentCurrency];
+
+      const formattedNumber = new Intl.NumberFormat(cfg.locale, {
+        minimumFractionDigits: cfg.decimals,
+        maximumFractionDigits: cfg.decimals
+      }).format(value);
+
+      return `${cfg.symbol}${formattedNumber}`;
+    }
+
+    /**
+     * Lightweight Web Audio API Synthesizer for Tactile Cyber Feedback
+     */
+    function playCyberBlip(freq = 620, duration = 0.06) {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.4, ctx.currentTime + duration);
+        gain.gain.setValueAtTime(0.03, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) {
+        // Ignore audio errors if blocked before user gesture
+      }
+    }
+
+    /**
+     * Switch Active Currency (INR, USD, GBP, EUR)
+     */
+    function setCurrency(currencyCode) {
+      if (!CURRENCIES[currencyCode]) return;
+      currentCurrency = currencyCode;
+      playCyberBlip(780, 0.05);
+
+      // Update active button styles
+      document.querySelectorAll('.currency-btn').forEach(btn => {
+        const isSelected = btn.dataset.currency === currencyCode;
+        if (isSelected) {
+          btn.className = 'currency-btn px-2.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer bg-cyberyellow text-void shadow-neon-yellow';
+        } else {
+          btn.className = 'currency-btn px-2.5 py-1.5 rounded-lg font-mono text-xs font-bold transition-all cursor-pointer text-gray-400 hover:text-white';
+        }
+      });
+
+      // Update Hero Currency Telemetry Pill
+      const cfg = CURRENCIES[currencyCode];
+      document.getElementById('active-currency-symbol').textContent = cfg.symbol;
+      document.getElementById('active-currency-label').textContent = cfg.label;
+
+      // Re-render products and cart with pulse animation
+      renderProducts(true);
+      renderCart();
+      showToast(`CURRENCY SET TO ${cfg.code} (${cfg.symbol})`);
+    }
+
+    /**
+     * Filter Products by Category
+     */
+    function filterCategory(category) {
+      currentFilter = category;
+      playCyberBlip(520, 0.05);
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        const isActive = btn.dataset.filter === category;
+        if (isActive) {
+          btn.className = 'filter-btn px-4 py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold uppercase transition-all cursor-pointer bg-cyberyellow text-void shadow-neon-yellow';
+        } else {
+          btn.className = 'filter-btn px-4 py-2.5 rounded-xl font-mono text-xs sm:text-sm font-bold uppercase transition-all cursor-pointer bg-zinc-900 text-gray-300 border border-zinc-800 hover:border-electriccyan hover:text-electriccyan';
+        }
+      });
+
+      renderProducts(false);
+    }
+
+    /**
+     * Render Product Cards into the Grid
+     */
+    function renderProducts(animatePrices = false) {
+      const grid = document.getElementById('product-grid');
+      const filtered = currentFilter === 'all'
+        ? PRODUCTS
+        : PRODUCTS.filter(p => p.category === currentFilter);
+
+      document.getElementById('visible-count').textContent = filtered.length;
+
+      grid.innerHTML = filtered.map(product => {
+        const priceDisplay = formatPrice(product);
+        const pulseClass = animatePrices ? 'price-updated' : '';
+
+        return `
+          <article class="product-card group relative bg-zinc-950/95 border border-zinc-800 hover:border-crimson rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-neon-crimson">
+
+            <!-- Top Metadata Row -->
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-4">
+                <span class="px-2.5 py-1 rounded-lg font-mono text-[11px] font-bold tracking-wider uppercase ${product.badgeColor}">
+                  ${product.badge}
+                </span>
+                <span class="font-mono text-xs text-gray-400 border border-zinc-800 px-2 py-0.5 rounded-md">
+                  ⚡ ${product.voltage}
+                </span>
+              </div>
+
+              <!-- Product Visual Box -->
+              <div class="relative bg-void/90 border border-zinc-900 group-hover:border-zinc-700 rounded-xl py-6 px-4 mb-5 overflow-hidden">
+                <div class="absolute top-2 right-2.5 font-mono text-[10px] text-gray-600">
+                  ID//${product.id.toUpperCase()}
+                </div>
+                ${getProductSVG(product.svgType)}
+              </div>
+
+              <!-- Title & Subtitle -->
+              <h2 class="font-display font-bold text-lg sm:text-xl text-white group-hover:text-cyberyellow transition-colors">
+                ${product.name}
+              </h2>
+              <p class="font-mono text-xs text-electriccyan mt-1">
+                ${product.subtitle}
+              </p>
+
+              <!-- Formula Spec Tags -->
+              <div class="flex flex-wrap gap-1.5 mt-3.5">
+                ${product.specs.map(spec => `
+                  <span class="px-2 py-1 rounded-md bg-zinc-900 border border-zinc-800 font-mono text-[11px] text-gray-300">
+                    ${spec}
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Bottom Price & Action Buttons -->
+            <div class="mt-6 pt-4 border-t border-zinc-800/90">
+              <div class="flex items-baseline justify-between mb-4">
+                <div>
+                  <span class="block font-mono text-[11px] text-gray-400 uppercase">UNIT PRICE (${currentCurrency})</span>
+                  <span class="font-display font-black text-2xl sm:text-3xl text-white ${pulseClass}">
+                    ${priceDisplay}
+                  </span>
+                </div>
+                <span class="font-mono text-xs text-emerald-400 flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> IN STOCK
+                </span>
+              </div>
+
+              <!-- Dual Action Buttons: ADD TO CART + BUY NOW -->
+              <div class="grid grid-cols-2 gap-2.5">
+                <button
+                  type="button"
+                  onclick="addToCart('${product.id}')"
+                  class="py-3 px-3 rounded-xl bg-void hover:bg-electriccyan/15 border border-electriccyan text-electriccyan font-mono text-xs sm:text-sm font-bold uppercase tracking-wide transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                  <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                  </svg>
+                  ADD TO CART
+                </button>
+
+                <button
+                  type="button"
+                  onclick="buyNow('${product.id}')"
+                  class="py-3 px-3 rounded-xl bg-cyberyellow hover:bg-yellow-300 text-void font-display font-black text-xs sm:text-sm uppercase tracking-wider shadow-neon-yellow transition-all cursor-pointer flex items-center justify-center gap-1">
+                  ⚡ BUY NOW
+                </button>
+              </div>
+            </div>
+
+          </article>
+        `;
+      }).join('');
+    }
+
+    /**
+     * Add Product to Cart
+     */
+    function addToCart(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cart.find(item => item.productId === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ productId, qty: 1 });
+      }
+
+      playCyberBlip(880, 0.07);
+      renderCart();
+      showToast(`ADDED: ${product.name}`);
+    }
+
+    /**
+     * Update Quantity Inside Cart
+     */
+    function updateCartQty(productId, delta) {
+      const idx = cart.findIndex(item => item.productId === productId);
+      if (idx === -1) return;
+
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) {
+        cart.splice(idx, 1);
+      }
+
+      playCyberBlip(delta > 0 ? 740 : 440, 0.05);
+      renderCart();
+    }
+
+    /**
+     * Render Slide-Over Cart Contents & Totals
+     */
+    function renderCart() {
+      const container = document.getElementById('cart-items-container');
+      const badge = document.getElementById('cart-count-badge');
+      const totalEl = document.getElementById('cart-total-price');
+      const checkoutBtn = document.getElementById('checkout-cart-btn');
+
+      const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      badge.textContent = totalCount;
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center py-12 px-4">
+            <div class="w-14 h-14 rounded-2xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-gray-500 mb-3">
+              ⚡
+            </div>
+            <p class="font-display font-bold text-sm text-gray-300">MANIFEST EMPTY</p>
+            <p class="font-mono text-xs text-gray-500 mt-1">Select high-voltage formulations from the shop depot to charge your cart.</p>
+          </div>
+        `;
+        totalEl.textContent = formatPrice(0, true);
+        checkoutBtn.disabled = true;
+        return;
+      }
+
+      checkoutBtn.disabled = false;
+      let totalAmount = 0;
+
+      container.innerHTML = cart.map(item => {
+        const product = PRODUCTS.find(p => p.id === item.productId);
+        const unitPrice = product.prices[currentCurrency];
+        const lineTotal = unitPrice * item.qty;
+        totalAmount += lineTotal;
+
+        return `
+          <div class="bg-void border border-zinc-800 rounded-xl p-3.5 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <h4 class="font-display font-bold text-sm text-white truncate">${product.name}</h4>
+              <p class="font-mono text-xs text-electriccyan mt-0.5">
+                ${formatPrice(unitPrice, true)} each
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onclick="updateCartQty('${product.id}', -1)"
+                class="w-8 h-8 rounded-lg bg-zinc-900 hover:bg-crimson text-white font-mono font-bold transition-colors cursor-pointer">
+                -
+              </button>
+              <span class="font-mono text-sm font-bold w-6 text-center">${item.qty}</span>
+              <button
+                type="button"
+                onclick="updateCartQty('${product.id}', 1)"
+                class="w-8 h-8 rounded-lg bg-zinc-900 hover:bg-electriccyan hover:text-void text-white font-mono font-bold transition-colors cursor-pointer">
+                +
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      totalEl.textContent = formatPrice(totalAmount, true);
+    }
+
+    /**
+     * Toggle Cart Drawer Open/Closed
+     */
+    function toggleCart(open) {
+      const drawer = document.getElementById('cart-drawer');
+      const backdrop = document.getElementById('cart-backdrop');
+
+      if (open) {
+        backdrop.classList.remove('hidden');
+        drawer.classList.remove('translate-x-full');
+      } else {
+        backdrop.classList.add('hidden');
+        drawer.classList.add('translate-x-full');
+      }
+    }
+
+    /**
+     * Immediate "Buy Now" Trigger for a Single Product
+     */
+    function buyNow(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+
+      playCyberBlip(960, 0.08);
+      isBuyNowFlow = true;
+      activeCheckoutItems = [{ productId, qty: 1 }];
+      openCheckoutModal();
+    }
+
+    /**
+     * Open Checkout Modal from Cart Drawer
+     */
+    function openCheckoutFromCart() {
+      if (cart.length === 0) return;
+      toggleCart(false);
+      isBuyNowFlow = false;
+      activeCheckoutItems = cart.map(item => ({ ...item }));
+      openCheckoutModal();
+    }
+
+    /**
+     * Populate & Display Express Neural Checkout Modal
+     */
+    function openCheckoutModal() {
+      const modal = document.getElementById('checkout-modal');
+      const formView = document.getElementById('checkout-form-view');
+      const successView = document.getElementById('checkout-success-view');
+      const summaryList = document.getElementById('checkout-summary-list');
+      const totalDisplay = document.getElementById('checkout-total-display');
+      const currencyTag = document.getElementById('checkout-currency-tag');
+
+      formView.classList.remove('hidden');
+      successView.classList.add('hidden');
+
+      currencyTag.textContent = `CURRENCY: ${currentCurrency}`;
+
+      let grandTotal = 0;
+      summaryList.innerHTML = activeCheckoutItems.map(item => {
+        const product = PRODUCTS.find(p => p.id === item.productId);
+        const linePrice = product.prices[currentCurrency] * item.qty;
+        grandTotal += linePrice;
+
+        return `
+          <div class="flex items-center justify-between">
+            <span>${item.qty}x ${product.name}</span>
+            <span class="font-mono text-white font-semibold">${formatPrice(linePrice, true)}</span>
+          </div>
+        `;
+      }).join('');
+
+      totalDisplay.textContent = formatPrice(grandTotal, true);
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    /**
+     * Close Checkout Modal
+     */
+    function closeCheckoutModal() {
+      const modal = document.getElementById('checkout-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    /**
+     * Select Payment Protocol Button
+     */
+    function selectPayment(btn) {
+      document.querySelectorAll('.pay-method-btn').forEach(b => {
+        b.className = 'pay-method-btn py-2 px-3 rounded-xl border border-zinc-700 bg-void text-gray-400 font-mono text-xs font-bold cursor-pointer';
+      });
+      btn.className = 'pay-method-btn py-2 px-3 rounded-xl border border-cyberyellow bg-cyberyellow/15 text-cyberyellow font-mono text-xs font-bold cursor-pointer';
+      playCyberBlip(650, 0.04);
+    }
+
+    /**
+     * Complete Simulated Order & Generate Receipt
+     */
+    function confirmTransaction() {
+      playCyberBlip(1050, 0.12);
+
+      // Clear cart if checked out from cart
+      if (!isBuyNowFlow) {
+        cart = [];
+        renderCart();
+      }
+
+      const randomCode = Math.floor(100000 + Math.random() * 900000);
+      document.getElementById('order-receipt-id').textContent = `TXN-ID: #LRH-${randomCode} (${currentCurrency})`;
+
+      document.getElementById('checkout-form-view').classList.add('hidden');
+      document.getElementById('checkout-success-view').classList.remove('hidden');
+    }
+
+    /**
+     * Non-intrusive Cyber Toast Helper
+     */
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('cyber-toast');
+      const msgEl = document.getElementById('cyber-toast-msg');
+      msgEl.textContent = message;
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 2400);
+    }
+
+    // Initialize Page on Load
+    window.addEventListener('DOMContentLoaded', () => {
+      setCurrency('INR');
+      renderCart();
+    });
+  </script>
+</body>
+</html>
